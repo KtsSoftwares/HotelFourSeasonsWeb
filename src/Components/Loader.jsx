@@ -1,6 +1,6 @@
 import { useFirebase } from '../Context/FirebaseContext';
 import '../CSS/LoadingOverlay.css';
-import KTSLogo from '../Assets/Images/KTS_Logo.png'; 
+import KTSLogo from '../assets/Images/KTS_Logo.png'; 
 
 const Loader = () => {
     const { loading } = useFirebase();
