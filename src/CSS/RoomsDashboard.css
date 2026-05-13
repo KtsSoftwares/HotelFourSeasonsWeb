@@ -1,0 +1,32 @@
+/* --- Global Dashboard Variables & Container --- */
+.text-gold {
+    color: #D4AF37 !important;
+}
+
+.border-bottom-gold {
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+/* --- Admin Action Bar --- */
+.btn-gold-admin {
+    background-color: #D4AF37;
+    color: #000;
+    font-weight: 700;
+    border: 1px solid #D4AF37;
+    transition: all 0.3s ease;
+}
+
+.btn-gold-admin:hover {
+    background-color: #000;
+    color: #D4AF37;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+    .btn-gold-admin {
+        padding: 8px 15px;
+        font-size: 0.8rem;
+    }
+}

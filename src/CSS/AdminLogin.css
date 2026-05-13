@@ -1,0 +1,62 @@
+.admin-card {
+  background: #1A1A1B;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  border-radius: 2px;
+}
+
+.admin-brand {
+  color: #FFFFFF;
+  letter-spacing: 5px;
+  font-weight: 300;
+  margin-bottom: 0;
+}
+
+.gold-divider {
+  width: 40px;
+  height: 2px;
+  background-color: #D4AF37;
+  margin-top: 10px;
+}
+
+.text-gold {
+  color: #D4AF37;
+  letter-spacing: 1.5px;
+}
+
+/* Custom Admin Inputs */
+.admin-input {
+  background-color: #252526 !important;
+  border: 1px solid #333 !important;
+  color: #fff !important;
+  border-radius: 0;
+  padding: 12px;
+  font-family: sans-serif; /* Cleaner for typing */
+}
+
+.admin-input:focus {
+  border-color: #D4AF37 !important;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.2) !important;
+}
+
+.admin-input::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+/* Shiny Login Button */
+.btn-gold-login {
+  background-color: #D4AF37;
+  color: #000;
+  border: none;
+  border-radius: 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+  transition: 0.3s;
+}
+
+.btn-gold-login:hover {
+  background-color: #bfa030;
+  transform: translateY(-2px);
+}

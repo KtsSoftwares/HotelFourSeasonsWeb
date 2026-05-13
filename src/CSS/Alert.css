@@ -1,0 +1,18 @@
+.alert {
+    background-color: #1a1a1b; /* Matches your card bg */
+    color: #fff;
+    border-width: 2px;
+}
+
+.alert-danger {
+    border-color: #dc3545; /* Solid red border */
+}
+
+.alert-success {
+    border-color: #D4AF37; /* Solid gold border */
+    color: #D4AF37;
+}
+
+.btn-close {
+    filter: invert(1); /* Turns the black 'X' into a white 'X' */
+}

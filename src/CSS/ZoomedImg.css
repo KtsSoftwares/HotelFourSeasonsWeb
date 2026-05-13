@@ -1,0 +1,47 @@
+/* --- Lightbox Overlay --- */
+.lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95); /* Deep dark background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; /* Must be higher than the modal */
+    cursor: zoom-out;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.lightbox-content img {
+    max-height: 85vh;
+    border: 2px solid #D4AF37;
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.3);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: -50px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #D4AF37;
+    font-size: 3rem;
+    cursor: pointer;
+}
+
+/* Animation for the zoom effect */
+.animate-zoom {
+    animation: zoomIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}

@@ -1,0 +1,154 @@
+.border-bottom-gold {
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+/* --- Force Date Picker Icon to be Visible (Light) --- */
+.admin-input::-webkit-calendar-picker-indicator {
+    /* This filter turns the black icon white */
+    filter: invert(1); 
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.admin-input::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    /* Optional: Make it gold on hover to match your theme */
+    filter: invert(70%) sepia(50%) saturate(500%) hue-rotate(10deg); 
+}
+
+select.admin-input {
+    background-color: #1A1A1B;
+    color: white;
+    border: 1px solid #444;
+}
+
+select.admin-input option {
+    background-color: #1A1A1B;
+    color: white;
+}
+
+/* For Firefox support */
+.admin-input {
+    color-scheme: white; 
+}
+
+.custom-admin-table {
+    width: 100% !important;
+    border-collapse: separate;
+    border-spacing: 0 12px !important; /* The Floating Gap */
+    font-variant-numeric: tabular-nums;
+}
+
+.custom-admin-table thead th {
+    background: #111 !important;
+    color: #D4AF37 !important;
+    border: none !important;
+    padding: 18px 15px !important;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.custom-admin-table tbody tr {
+    background: #1A1A1B;
+    transition: 0.3s;
+}
+
+.custom-admin-table tbody tr:hover {
+    background: #252526 !important;
+}
+
+.custom-admin-table tbody td {
+    background: #1A1A1B !important; /* Dark Card Background */
+    border: none !important;
+    padding: 20px 15px !important;
+    color: #eee;
+    font-size: 14px;
+}
+
+/* Rounded Corners for the "Floating Card" effect */
+.custom-admin-table tbody tr td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.custom-admin-table tbody tr td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Badge Styles */
+.bg-success-soft {
+    background: rgba(40, 167, 69, 0.1);
+}
+
+.bg-secondary-soft {
+    background: rgba(0, 191, 41, 0.43);
+}
+
+/* Deep Dark Background for Modal */
+.bg-dark-deep {
+    background-color: #0c0c0c;
+}
+
+.bg-gold-btn {
+    background-color: #D4AF37 !important;
+}
+
+.pagination .page-link:hover {
+    background-color: #D4AF37;
+    color: #000;
+}
+
+@media (max-width: 768px) {
+    .custom-admin-table, 
+    .custom-admin-table thead, 
+    .custom-admin-table tbody, 
+    .custom-admin-table th, 
+    .custom-admin-table td, 
+    .custom-admin-table tr { 
+        display: block !important; 
+    }
+
+    /* Hide Desktop Headers */
+    .custom-admin-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .custom-admin-table tbody tr {
+        margin-bottom: 20px;
+        border: 1px solid #333;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .custom-admin-table td { 
+        position: relative;
+        padding-left: 45% !important; 
+        text-align: right !important;
+        border-bottom: 1px solid #222 !important;
+        min-height: 50px;
+    }
+
+    .custom-admin-table td:last-child {
+        border-bottom: none !important;
+        background: #111 !important; /* Darker footer for the Action button */
+    }
+
+    /* Mobile Labels */
+    .custom-admin-table td:before { 
+        content: attr(data-label);
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        width: 40%; 
+        text-align: left;
+        font-weight: bold;
+        color: #D4AF37;
+        text-transform: uppercase;
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+}

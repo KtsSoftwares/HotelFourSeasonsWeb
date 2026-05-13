@@ -1,0 +1,92 @@
+/* Increased standard font size for the whole container */
+.container {
+    font-size: 1.1rem; 
+}
+
+/* Labels: Now visible, uppercase, and elegant */
+.profile-label {
+    display: block;
+    color: #a0a0a0; /* Slightly lighter than secondary for readability */
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.passport-photo-container {
+    width: 140px; /* Slightly larger */
+    height: 175px;
+    border: 3px solid #D4AF37;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.staff-avatar {
+    max-width: 100%; /* Ensures it never gets wider than its container */
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.mono-text {
+    font-family: 'Courier New', Courier, monospace; /* Looks more "official" for IDs */
+    font-size: 0.85rem;
+}
+
+.uppercase-label {
+    letter-spacing: 1px;
+    font-weight: 700;
+    font-size: 0.7rem;
+}
+
+.text-gold { color: #D4AF37; }
+.btn-gold { 
+    background-color: #D4AF37; 
+    color: black; 
+    font-weight: bold; 
+}
+.border-gold { border: 1px solid #D4AF37 !important; }
+
+/* Values: Larger, bold, and more readable */
+.profile-value {
+    color: #ffffff;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.address-text {
+    line-height: 1.6;
+    border-bottom: none;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 3px solid #D4AF37;
+}
+
+h2.text-gold {
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+}
+
+.bg-gold {
+    background-color: #D4AF37 !important; /* Gold */
+    color: #000000 !important; /* Dark text for high contrast */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.4em 0.8em;
+}
+
+/* Mobile Adjustment */
+
+@media (max-width: 768px) {
+    .profile-value {
+        font-size: 1.1rem;
+    }
+    h2.text-gold {
+        font-size: 1.8rem;
+    }
+}

@@ -1,0 +1,150 @@
+/* Custom Modal Overlay with Blur */
+.custom-modal-overlay {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    z-index: 1080;
+}
+
+.premium-label {
+    font-size: 0.8rem; /* Increased from 0.65rem */
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    color: #e0e0e0 !important; /* Brighter Silver-White */
+    display: block;
+}
+
+/* Section Headings (Step 1, Step 2) */
+.section-title {
+    color: #D4AF37; /* Consistent Gold */
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.border-gold-premium {
+    border: 1px solid #D4AF37 !important;
+}
+
+.text-secondary-light {
+    color: #b0b0b0 !important; /* A light silver/grey */
+}
+
+.tiny-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 5px;
+    color: #c0c0c0 !important;
+    text-transform: uppercase;
+}
+
+.address-text {
+    color: #e0e0e0 !important; 
+    font-weight: 300;
+}
+
+/* Premium Glassmorphism Inputs */
+.premium-input {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    font-size: 0.95rem;
+    padding: 10px 12px;
+    transition: all 0.3s ease;
+}
+
+.premium-input:focus {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: #D4AF37 !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.2) !important;
+}
+
+.readonly-input {
+    background: rgba(0, 0, 0, 0.2) !important;
+    color: #D4AF37 !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    font-weight: bold;
+}
+
+.file-input { font-size: 0.8rem; padding: 7px; }
+
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.btn-gold {
+    background-color: #D4AF37;
+    color: #000;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-gold:hover {
+    color: #fff;
+    background-color: #b8962d;
+    transform: translateY(-1px);
+}
+
+.address-box {
+    background: rgba(212, 175, 55, 0.05);
+    line-height: 1.6;
+}
+
+/* Make placeholders visible on dark inputs */
+.premium-input::placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+    font-weight: 300;
+}
+
+/* For Chrome, Safari, and newer Edge */
+.premium-input::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+}
+
+/* For Firefox */
+.premium-input::-moz-placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+    opacity: 1; /* Firefox lowers opacity by default */
+}
+
+/* For Internet Explorer/Old Edge */
+.premium-input:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.45) !important;
+}
+
+.premium-input:focus::placeholder {
+    color: rgba(212, 175, 55, 0.4) !important; /* Slight gold tint when focused */
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 576px) {
+    .modal-dialog { margin: 10px; }
+    .premium-input { font-size: 1rem; } /* Larger for mobile tap targets */
+}
+
+/* Limit the height of the modal body on mobile */
+@media (max-width: 768px) {
+    .modal-body {
+        max-height: 70vh; /* Takes up 70% of the screen height max */
+        overflow-y: auto;
+        padding-right: 10px; /* Space for scrollbar */
+    }
+
+    /* Custom thin scrollbar for a "Luxury" feel */
+    .modal-body::-webkit-scrollbar {
+        width: 4px;
+    }
+    .modal-body::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.05);
+    }
+    .modal-body::-webkit-scrollbar-thumb {
+        background: #D4AF37; /* Gold scrollbar thumb */
+        border-radius: 10px;
+    }
+}

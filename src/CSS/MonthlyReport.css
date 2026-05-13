@@ -1,0 +1,190 @@
+/* Container remains dark/gold */
+.report-container {
+    background: #1A1A1B;
+    max-width: 1100px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #222;
+}
+
+.border-bottom-gold {
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+.report-title {
+    color: #D4AF37;
+    font-weight: 500;
+}
+
+/* Filter bar uses Row/Col now, so we style the background */
+.filter-bar {
+    background: #1A1A1B;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    margin: 0;
+    /* Bootstrap rows usually have negative margins */
+}
+
+.input-group-custom label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #D4AF37;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* Overriding Bootstrap form-select for our Dark Theme */
+.admin-input {
+    background-color: #111 !important;
+    color: white !important;
+    border: 1px solid #444 !important;
+    font-size: 14px;
+}
+
+.admin-input:focus {
+    border-color: #D4AF37 !important;
+    box-shadow: none;
+}
+
+.btn-generate {
+    background: #D4AF37 !important;
+    color: #000 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: none;
+    height: 45px;
+    /* Matches the select height */
+}
+
+.btn-generate:hover {
+    background: #B8860B !important;
+}
+
+/* Table styling stays consistent with the "Golden" row effect */
+.report-table {
+    width: 100% !important;
+    border-collapse: separate;
+    border-spacing: 0 0;
+    table-layout: fixed;
+    font-variant-numeric: tabular-nums;
+}
+
+.report-table thead th {
+    background: #111 !important;
+    color: #D4AF37 !important;
+    font-size: 13px !important;
+    border: none !important;
+    padding: 18px 15px;
+    /* Taller headers */
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.report-table tbody td {
+    color: #eee;
+    font-size: 14px !important;
+    background: #1A1A1B !important;
+    border: none !important;
+    padding: 20px 15px;
+    font-size: 14px;
+}
+
+/* Add rounded corners to the start and end of each row "card" */
+.report-table tbody tr td:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+.report-table tbody tr td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.report-table tbody tr:hover td {
+    background: #363129 !important;
+    cursor: default;
+}
+
+.bold-text {
+    font-weight: 700;
+    color: #D4AF37;
+    font-family: 'Inter', -apple-system, sans-serif; 
+    letter-spacing: 0.5px;
+}
+
+.btn-excel {
+    background: #1d6f42;
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn-excel:hover {
+    background: #155231;
+}
+
+/* Mobile Responsive "Card" View */
+@media (max-width: 768px) {
+    /* Make the container full width on mobile */
+    .filter-bar.w-75, .table-responsive.w-75 {
+        width: 100% !important;
+    }
+
+    /* Force the table to stop behaving like a table */
+    .report-table, 
+    .report-table thead, 
+    .report-table tbody, 
+    .report-table th, 
+    .report-table td, 
+    .report-table tr { 
+        display: block; 
+    }
+
+    /* Hide table headers (but keep for screen readers) */
+    .report-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    .report-table tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid #333;
+        border-radius: 8px;
+        background: #1A1A1B;
+    }
+
+    .report-table td { 
+        /* Behave  like a "row" */
+        border: none !important;
+        border-bottom: 1px solid #222 !important; 
+        position: relative;
+        padding-left: 50% !important; 
+        text-align: right !important;
+        white-space: normal;
+    }
+
+    .report-table td:last-child {
+        border-bottom: none !important;
+    }
+
+    /* Label the data using pseudo-elements */
+    .report-table td:before { 
+        position: absolute;
+        top: 20px;
+        left: 15px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #D4AF37; /* Golden Label */
+        content: attr(data-label); /* Pulls from the HTML attribute */
+        text-transform: uppercase;
+        font-size: 11px;
+    }
+}

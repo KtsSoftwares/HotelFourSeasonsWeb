@@ -1,0 +1,125 @@
+/* --- Admin Global Layout --- */
+.admin-container {
+    padding: 40px 20px;
+}
+
+.admin-card {
+    background: #1A1A1B;
+    border: 1px solid #333;
+    max-width: 1100px;
+    margin: 0 auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+.card-header-gold {
+    background: linear-gradient(90deg, #1A1A1B, #121212);
+    padding: 20px 30px;
+    border-bottom: 2px solid #D4AF37;
+}
+
+.card-header-gold h2 {
+    color: #D4AF37;
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 2px;
+}
+
+/* --- Form Elements --- */
+.section-title {
+    color: #edc53e;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+}
+
+.admin-label {
+    color: #d7d7d7;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.admin-input {
+    background: #0A0A0A !important;
+    border: 1px solid #444 !important;
+    color: #FFF !important;
+    padding: 10px 15px;
+    font-size: 0.95rem;
+}
+
+.admin-input:focus {
+    border-color: #D4AF37 !important;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.2) !important;
+}
+
+.highlight-gold {
+    border-color: #D4AF37 !important;
+}
+
+/* --- Custom Select Arrow --- */
+.form-select.admin-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23D4AF37' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 16px 12px !important;
+    padding-right: 2.5rem !important;
+}
+
+/* --- Buttons & Boxes --- */
+.upload-box {
+    background: #121212;
+    padding: 15px;
+    border: 1px dashed #444;
+    border-radius: 8px;
+}
+
+.btn-gold-admin {
+    background-color: #D4AF37;
+    color: #000;
+    border: none;
+    font-weight: 700;
+    letter-spacing: 2px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.btn-gold-admin:hover {
+    background-color: #B8962E;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* --- Animations --- */
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.border-danger {
+    border: 1px solid #dc3545 !important;
+    background: rgba(220, 53, 69, 0.05) !important;
+}
+
+.text-danger {
+    font-size: 0.7rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    display: block;
+    letter-spacing: 0.5px;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 768px) {
+    .admin-container { padding: 15px; }
+    .card-header-gold { text-align: center; }
+}

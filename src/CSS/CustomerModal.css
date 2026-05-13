@@ -1,0 +1,127 @@
+.customer-detail-modal {
+    max-width: 950px; /* Increased width for breathing room */
+    border: 1px solid #D4AF37;
+}
+
+.section-title-gold {
+    color: #D4AF37;
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.companion-tabs {
+    /* overflow-x: auto; */
+    white-space: nowrap;
+}
+
+.btn-tab {
+    background: #1a1a1a;
+    color: #888;
+    border: 1px solid #333;
+    border-radius: 15%;
+    padding: 8px 20px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.btn-tab:hover {
+    color: #D4AF37;
+    border-color: #ffffff;
+}
+
+.btn-tab.active {
+    background: #ffffff;
+    color: black;
+    font-weight: bold;
+    border-color: #D4AF37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.border-gold-subtle {
+    border-color: rgba(212, 175, 55, 0.2) !important;
+}
+
+.col-lg-5 {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start; /* CRITICAL: Prevents stretching to match left column height */
+    position: sticky;       /* Optional: Keeps IDs visible while scrolling long left content */
+    top: 0;
+}
+
+.info-item label {
+    display: block;
+    font-size: 1rem;
+    color: #d19600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+}
+
+.info-item p {
+    color: #fff;
+    font-size: 1rem;
+    margin-bottom: 0;
+}
+
+/* ID Image Styling */
+.id-card-container {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Keeps the label and box aligned to the left */
+}
+
+.id-image-box {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #333;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #111;
+    transition: border-color 0.3s ease;
+    
+    /* The Magic Part: */
+    display: flex; 
+    max-width: 100%;       /* Prevents it from going outside the column */
+    max-height: 400px;     /* Prevents portrait IDs from being too tall */
+}
+
+.id-image-box img {
+    display: block;
+    max-width: 100%;
+    max-height: 400px;     /* Match the container max-height */
+    width: auto;           /* Box width will shrink to match the image */
+    height: auto;          /* Box height will shrink to match the image */
+    object-fit: contain;
+}
+
+.image-overlay-zoom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(212, 175, 55, 0.8);
+    color: #000;
+    text-align: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 5px;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.id-image-box:hover .image-overlay-zoom {
+    opacity: 1;
+}
+
+.id-image-box:hover {
+    border-color: #D4AF37;
+}

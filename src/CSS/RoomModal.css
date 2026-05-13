@@ -1,0 +1,177 @@
+.custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    backdrop-filter: blur(5px);
+}
+
+.custom-modal-content {
+    background: #1A1A1B;
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh; /* Modal will never exceed 90% of screen height */
+    display: flex;
+    flex-direction: column; /* Necessary for fixed header/footer */
+    border: 1px solid #D4AF37;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+/* Scrollable area */
+.modal-body-scrollable {
+    padding: 25px;
+    overflow-y: auto;
+    flex: 1; /* Takes up remaining space between header and footer */
+}
+
+/* Custom Scrollbar for Luxury Look */
+.modal-body-scrollable::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-track {
+    background: #111;
+}
+
+.modal-body-scrollable::-webkit-scrollbar-thumb {
+    background: #D4AF37;
+    border-radius: 10px;
+}
+
+.modal-header-gold {
+    padding: 20px;
+    background: #111;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #D4AF37;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal-body-dark {
+    padding: 25px;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+}
+
+.image-upload-card {
+    position: relative;
+    width: 32%;
+    height: 120px;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.empty-preview {
+    color: #444;
+    text-align: center;
+}
+
+.upload-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(212, 175, 55, 0.8);
+    color: black;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 4px 0;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.upload-overlay:hover {
+    background: #D4AF37;
+}
+
+.btn-gold-admin {
+    background: #D4AF37;
+    color: black;
+    font-weight: bold;
+}
+
+.btn-gold-admin:disabled {
+    background: #555;
+    color: #888;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.upload-loader-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.spinner-gold {
+    width: 30px;
+    height: 30px;
+    border: 3px solid rgba(212, 175, 55, 0.2);
+    border-top: 3px solid #D4AF37;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 8px;
+}
+
+.upload-text {
+    color: #D4AF37;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Keep the footer pinned at the bottom */
+.modal-footer-admin {
+    padding: 15px 25px;
+    background: #111;
+    border-top: 1px solid #333;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}

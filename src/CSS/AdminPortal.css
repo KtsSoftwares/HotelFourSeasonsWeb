@@ -1,0 +1,103 @@
+/* --- Global Styles --- */
+.border-bottom-gold { border-bottom: 2px solid #D4AF37 !important; }
+.text-gold { color: #D4AF37 !important; }
+.status-green-dot {
+    width: 8px; height: 8px; background-color: #28a745;
+    border-radius: 50%; box-shadow: 0 0 5px #28a745;
+}
+
+/* --- Mobile Sidebar Logic --- */
+.mobile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px; /* Hidden by default */
+    width: 280px;
+    height: 100vh;
+    z-index: 1060;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    border-right: 1px solid #D4AF37;
+}
+
+.mobile-sidebar.open {
+    left: 0;
+}
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+}
+
+.mobile-link {
+    font-size: 1.1rem;
+    padding: 12px 15px;
+    border-radius: 8px;
+    color: #fff !important;
+}
+
+.mobile-link.active {
+    background: rgba(212, 175, 55, 0.15);
+    color: #D4AF37 !important;
+    border-left: 4px solid #D4AF37;
+}
+
+/* --- Shared Dropdown Fix --- */
+.dropdown-menu {
+    display: none;
+}
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu-end {
+    right: 0 !important;
+    left: auto !important;
+}
+
+/* Desktop Hover/Active Link */
+.nav-link.active {
+    color: #D4AF37 !important;
+}
+
+@media (max-width: 576px) {
+    .dropdown-menu {
+        /* Ensure it doesn't exceed screen width */
+        width: 200px; 
+        max-width: 85vw; 
+        /* Add a small margin from the screen edge */
+        margin-right: 5px !important; 
+    }
+
+    /* Prevent the email text from breaking the layout */
+    .dropdown-menu p.text-truncate {
+        max-width: 150px;
+        display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
+}
+
+@media (min-width: 992px) {
+    .nav-link:hover {
+        color: #D4AF37 !important;
+    }
+}
+
+/* Ensure the button doesn't look too cramped without text */
+@media (max-width: 991px) {
+    .btn-black.dropdown-toggle {
+        padding: 8px 12px !important;
+        min-width: 45px;
+        justify-content: center;
+    }
+    
+    /* Remove the default arrow if it's too messy on tiny screens (Optional) */
+    .btn-black.dropdown-toggle::after { display: none; }
+}
