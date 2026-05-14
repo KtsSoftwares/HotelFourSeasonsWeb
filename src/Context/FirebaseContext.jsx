@@ -46,8 +46,8 @@ const firebaseConfig = {
 const FbContext = createContext(null);
 const appFirebase = initializeApp(firebaseConfig);
 const auth = getAuth(appFirebase);
-const db = getFirestore(appFirebase, "hotelfourseasons-web");
-const storage = getStorage(appFirebase, "gs://hotel-manager-cca5d.firebasestorage.app");
+const db = getFirestore(appFirebase, import.meta.env.VITE_FIRESTORE_URL);
+const storage = getStorage(appFirebase, import.meta.env.VITE_FIREBASE_STORAGE_URL);
 
 export const useFirebase = () => useContext(FbContext);
 

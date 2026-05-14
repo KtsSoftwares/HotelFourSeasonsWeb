@@ -25,6 +25,7 @@ export class HotelData {
         /** @type {string} */ this.gstNo = data.gstNo || "";
         /** @type {string} */ this.gstRegName = data.gstRegName || "";
         /** @type {string} */ this.sacCode = data.sacCode || "";
+        /** @type {string} */ this.website = data.website || "";
         /** @type {string[]} */ this.contactNumbers = data.contactNumbers || [];
         /** @type {number} */ this.startYear = data.startYear || 2026;
 

@@ -20,7 +20,7 @@ Font.register({
 const styles = StyleSheet.create({
     page: { padding: 30, fontSize: 10, fontFamily: 'Roboto', color: '#000' },
     header: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 },
-    hotelInfo: { width: '60%' },
+    hotelInfo: { width: '40%' },
     invoiceInfo: { width: '35%', textAlign: 'right' },
     bold: { fontWeight: 700 },
     title: { fontSize: 18, fontWeight: 700, marginBottom: 5 },
@@ -48,14 +48,15 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
             {/* 1. Header */}
             <View style={styles.header}>
                 <View style={styles.hotelInfo}>
-                    <Image src={KtsLogo} style={styles.logo} />
                     <Text style={[styles.title, { textTransform: 'uppercase' }]}>{hotel.name}</Text>
                     <Text>{hotel.address.line1}, {hotel.address.city}</Text>
                     <Text>{hotel.address.state} - {hotel.address.pin}</Text>
                     <Text>Contact: {hotel.contactNumbers.join(", ")}</Text>
                     <Text>Email: {hotel.email}</Text>
                     <Text style={styles.bold}>GSTIN: {hotel.gstNo}</Text>
+                    {hotel.website && <Text>Website: {hotel.website}</Text>}
                 </View>
+                <Image src={KtsLogo} style={styles.logo} />
                 <View style={styles.invoiceInfo}>
                     <Text style={[styles.title, { fontSize: 16 }]}>INVOICE</Text>
                     <Text style={styles.bold}>Invoice No: {bill.invoiceNo}</Text>
@@ -72,14 +73,14 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
                     <Text>{customer.address.state} - {customer.address.pincode}</Text>
                     <Text style={styles.bold}>GSTIN: {customer.companyGst || "N/A"}</Text>
                     <Text>Company Name: {customer.companyName || "N/A"}</Text>
-                    <Text>Company Address: {customer.companyAddress || "N/A"}</Text>
+                    <Text>Company Address: {customer.companyAddress.district ? `${customer.companyAddress.district}, ` : ""}{customer.companyAddress.state ? `${customer.companyAddress.state} ` : ""}{customer.companyAddress.country ? customer.companyAddress.country : ""}</Text>
                 </View>
                 <View style={styles.gridCol}>
                     <Text style={styles.sectionTitle}>STAY DETAILS</Text>
                     <Text style={styles.bold}>Room No: #{customer.roomNumber}</Text>
                     <Text>Check-in: {customer.getCheckInDateString()}</Text>
                     <Text>Check-out: {customer.getCheckOutDateString()}</Text>
-                    <Text>Nights: {bill.daysStayed}</Text>
+                    <Text>Stays: {bill.daysStayed}</Text>
                 </View>
             </View>
 
@@ -115,7 +116,7 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
                     <View style={styles.tableColWide}><Text style={[styles.tableCell, styles.bold]}>Description</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>HSN/SAC</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Rate</Text></View>
-                    <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Days</Text></View>
+                    <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Stays</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Total</Text></View>
                 </View>
                 <View style={styles.tableRow}>
@@ -131,7 +132,7 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
                 <view><Text style={styles.amountWords}>Amount in words: {bill.amount.amountInWords.toUpperCase()}</Text></view>
                 <view>
-                    {customer.address.state === hotel.address.state ?
+                    {customer.companyAddress.state === hotel.address.state ?
                         <>
                             <Text>CGST ({bill.amount.cgstPercent}%): {'\u20B9'}{bill.amount.cgstAmount}/-</Text>
                             <Text>SGST ({bill.amount.sgstPercent}%): {'\u20B9'}{bill.amount.sgstAmount}/-</Text>

@@ -113,7 +113,9 @@ const CustomerList = () => {
     };
 
     /** @param {Customer} guest */
-    const handleInitiateCheckOut = (guest) => {
+    const handleInitiateCheckOut = async (guest) => {
+        await fetchCompanions(guest);
+
         setCorpDetails(initialCorpDetails);
 
         setGuestForCheckout(guest);
