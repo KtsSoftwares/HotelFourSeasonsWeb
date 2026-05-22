@@ -82,21 +82,23 @@ const AdminPortal = () => {
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         >
                             <div className="status-green-dot"></div>
-                            <span className="small d-none d-sm-inline">
+                            {/* Changed d-none d-sm-inline to d-none d-md-inline to drop text faster on small screens */}
+                            <span className="small d-none d-md-inline">
                                 {user?.displayName || user?.email || "Admin"}
                             </span>
                         </button>
 
-                        <ul className={`dropdown-menu dropdown-menu-end dropdown-menu-dark border-gold shadow ${isDropdownOpen ? 'show' : ''}`}
+                        <ul
+                            className={`dropdown-menu dropdown-menu-end dropdown-menu-dark border-gold shadow ${isDropdownOpen ? 'show' : ''}`}
                             style={{
                                 position: 'absolute',
-                                right: 0,
-                                left: 'auto', // Force it to anchor to the right
-                                marginTop: '10px'
-                            }}>
+                                margin: '8px 0 0 0'
+                            }}
+                        >
                             <li className="px-3 py-2 border-bottom border-secondary">
                                 <p className="mb-0 small text-secondary">Signed in as</p>
-                                <p className="mb-0 fw-bold text-gold small text-truncate">{user?.email}</p>
+                                {/* Added standard Bootstrap typography tracking */}
+                                <p className="mb-0 fw-bold text-gold small text-truncate w-100">{user?.email}</p>
                             </li>
                             <li>
                                 <NavLink className="dropdown-item py-2" to="/admin/profile" onClick={closeMobileMenu}>

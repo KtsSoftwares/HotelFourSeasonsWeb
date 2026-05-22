@@ -50,14 +50,16 @@
 /* --- Shared Dropdown Fix --- */
 .dropdown-menu {
     display: none;
-}
-.dropdown-menu.show {
-    display: block;
+    /* Smooth transitions for mobile menu opening */
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.15s linear, transform 0.15s ease-out;
 }
 
-.dropdown-menu-end {
-    right: 0 !important;
-    left: auto !important;
+.dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 /* Desktop Hover/Active Link */
@@ -66,21 +68,38 @@
 }
 
 @media (max-width: 576px) {
-    .dropdown-menu {
-        /* Ensure it doesn't exceed screen width */
-        width: 200px; 
-        max-width: 85vw; 
-        /* Add a small margin from the screen edge */
-        margin-right: 5px !important; 
+    .dropdown-menu-end {
+        /* Kill absolute coordinate bugs */
+        right: 0 !important;
+        left: auto !important;
+        
+        /* Universal width sizing limits */
+        width: 220px !important;
+        max-width: 55vw !important;
+        
+        /* Prevent dropdown boundary collision from screen margin edge */
+        margin-right: -5px !important; 
+        padding: 0.5rem 0;
     }
 
-    /* Prevent the email text from breaking the layout */
+    /* Strict alignment rules for the dropdown user metadata block */
+    .dropdown-menu li.px-3.py-2 {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    /* Force the long emails or text to cut cleanly on 412px viewports */
     .dropdown-menu p.text-truncate {
-        max-width: 150px;
-        display: block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        max-width: 100% !important;
+        display: block !important;
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+    }
+    
+    .dropdown-item {
+        padding: 10px 12px !important;
+        font-size: 0.9rem;
     }
 }
 
@@ -93,11 +112,12 @@
 /* Ensure the button doesn't look too cramped without text */
 @media (max-width: 991px) {
     .btn-black.dropdown-toggle {
-        padding: 8px 12px !important;
-        min-width: 45px;
+        padding: 6px 10px !important;
+        min-width: 40px;
+        height: 38px;
         justify-content: center;
     }
     
     /* Remove the default arrow if it's too messy on tiny screens (Optional) */
-    .btn-black.dropdown-toggle::after { display: none; }
+    .btn-black.dropdown-toggle::after { display: none !important; }
 }
