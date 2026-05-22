@@ -31,6 +31,7 @@ import { Bill } from "../Models/Bill";
  * @property {function(Object, Customer, number, boolean): Promise<CustomerReturn>} getCustomersWithFilters
  * @property {function(string[]): Promise<Customer[]>} getCompanions
  * @property {function(Customer): Promise<{bill: Bill, hotelData: HotelData}>} getOrSetBill
+ * @property {function(string): Promise<Customer[]>} searchCustomersForEntry
 */
 
 const firebaseConfig = {
@@ -628,7 +629,7 @@ export const FirebaseProvider = ({ children }) => {
             // 1. Apply Filters
             // The '\uf8ff' character used in the query above is a very high code point in the Unicode range. Because it is after most regular characters in Unicode, the query matches all values that start with a {filter value}.
             if (filters.name && filters.name !== "") {
-                q = query(q, orderBy("name_lowercase"), startAt(filters.name.toLowerCase()), endAt(filters.name + "\uf8ff"));
+                q = query(q, orderBy("name_lowercase"), startAt(filters.name.toLowerCase()), endAt(filters.name.toLowerCase() + "\uf8ff"));
             } else if (filters.mobile && filters.mobile !== "") {
                 q = query(q, orderBy("mobileNumber"), startAt(filters.mobile), endAt(filters.mobile + "\uf8ff"));
             } else if (filters.date && filters.date !== "") {
@@ -669,6 +670,29 @@ export const FirebaseProvider = ({ children }) => {
     };
 
     /**
+     * Fetches all customers by name regardless of lead or non lead customers.
+     * @param {string} nameQuery - Search based on customer name.
+     * @returns {Promise<Customer[]>} - A Promise resolving to the array of Customer objects.
+     */
+    const searchCustomersForEntry = async (nameQuery) => {
+        try {
+            const q = query(
+                collection(db, "customers"),
+                where("status", "==", false),
+                orderBy("name_lowercase"),
+                startAt(nameQuery.toLowerCase()),
+                endAt(nameQuery.toLowerCase() + "\uf8ff"),
+                limit(5)
+            );
+            const querySnapshot = await getDocs(q);
+            return querySnapshot.docs.map(doc => (new Customer(doc.id, doc.data())));
+        } catch (error) {
+            console.error("Global Search Error:", error);
+            return [];
+        }
+    };
+
+    /**
      * Fetches the Bill array based on month and year for Excel conversion.
      * @param {number} month - Selected Month.
      * @param {number} year - Selected Year.
@@ -695,7 +719,7 @@ export const FirebaseProvider = ({ children }) => {
             setReportData({ month, year, reports });
         } catch (error) {
             console.error("Error fetching monthly report:", error);
-            setAlert({msg: `Unable get Monthly report, error: ${error.message}`})
+            setAlert({ msg: `Unable get Monthly report, error: ${error.message}` })
         } finally {
             setLoading(false);
         }
@@ -777,7 +801,8 @@ export const FirebaseProvider = ({ children }) => {
             setHasMore,
             setAppliedFilters,
             getOrSetBill,
-            fetchReport
+            fetchReport,
+            searchCustomersForEntry
         }}>
             {children}
         </FbContext.Provider>

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     tableColWide: { width: '40%', borderStyle: 'solid', borderWidth: 0.5, borderLeftWidth: 0, borderTopWidth: 0 },
     termsSection: { marginTop: 20, fontSize: 11, lineHeight: 1.2 },
     footer: { marginTop: 10, flexDirection: 'row', justifyContent: 'space-between' },
-    amountWords: { marginTop: 10, fontSize: 9, fontWeight: 400 },
+    amountWords: { marginTop: 10, fontSize: 9, fontWeight: 700 },
     logo: { width: 60, height: 60, marginBottom: 5 }
 });
 
@@ -115,15 +115,15 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
                 <View style={[styles.tableRow, { backgroundColor: '#f0f0f0' }]}>
                     <View style={styles.tableColWide}><Text style={[styles.tableCell, styles.bold]}>Description</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>HSN/SAC</Text></View>
-                    <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Rate</Text></View>
-                    <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Stays</Text></View>
+                    <View style={[styles.tableCol, { width: '10%' }]}><Text style={[styles.tableCell, styles.bold]}>Rate</Text></View>
+                    <View style={[styles.tableCol, { width: '10%' }]}><Text style={[styles.tableCell, styles.bold]}>Stays</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Total</Text></View>
                 </View>
                 <View style={styles.tableRow}>
                     <View style={styles.tableColWide}><Text style={styles.tableCell}>Room Accommodation Services</Text></View>
                     <View style={styles.tableCol}><Text style={styles.tableCell}>{hotel.sacCode}</Text></View>
-                    <View style={styles.tableCol}><Text style={styles.tableCell}>{bill.amount.rate}</Text></View>
-                    <View style={styles.tableCol}><Text style={styles.tableCell}>{bill.daysStayed}</Text></View>
+                    <View style={[styles.tableCol, { width: '10%' }]}><Text style={styles.tableCell}>{bill.amount.rate}</Text></View>
+                    <View style={[styles.tableCol, { width: '10%' }]}><Text style={styles.tableCell}>{bill.daysStayed}</Text></View>
                     <View style={styles.tableCol}><Text style={styles.tableCell}>{bill.amount.rate * bill.daysStayed}</Text></View>
                 </View>
             </View>

@@ -118,6 +118,21 @@
     letter-spacing: 0.5px;
 }
 
+.mw-600 { max-width: 600px; }
+
+.bg-dark-deep { background-color: #0a0a0a; }
+
+.result-item:hover {
+    background-color: rgba(212, 175, 55, 0.1);
+    border-color: #d4af37 !important;
+}
+
+.bg-dark-gold {
+    background-color: rgba(212, 175, 55, 0.2);
+    color: #d4af37;
+    font-size: 0.75rem;
+}
+
 /* --- Mobile Responsiveness --- */
 @media (max-width: 768px) {
     .admin-container { padding: 15px; }

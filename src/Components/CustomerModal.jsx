@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../CSS/RoomModal.css'; // Same CSS file from RoomModal for consistent styling
 import '../CSS/CustomerModal.css'; // Additional styles specific to CustomerModal
 import ZoomedImg from './ZoomedImg';
@@ -9,16 +10,24 @@ import { Customer } from '../Models/Customer';
  */
 const CustomerModal = ({ selectedGuest, setSelectedGuest, cachedGuestAndCompanions }) => {
 
+    const navigate = useNavigate();
+
     const [zoomedImg, setZoomedImg] = useState(null);
     /** @type {[Customer, React.Dispatch<React.SetStateAction<Customer>>]} */
     const [viewingGuest, setViewingGuest] = useState(selectedGuest);
+
+    const handleReCheckIn = (isGroup = false) => {
+        const guestData = isGroup ? cachedGuestAndCompanions : [viewingGuest];
+
+        navigate('/admin/customerEntry', { state: { reEntryData: guestData } });
+    };
 
     return (
         <div className="custom-modal-overlay" onClick={() => setSelectedGuest(null)}>
             {/* Wider modal for breathing room (w-100 max-width: 900px) */}
             <div className="custom-modal-content customer-detail-modal animate-slide-up" onClick={e => e.stopPropagation()}>
                 <div className="companion-tabs d-flex bg-black p-2 gap-2 border-bottom border-gold-subtle">
-                    { cachedGuestAndCompanions.length > 0 && cachedGuestAndCompanions.map((g) => (
+                    {cachedGuestAndCompanions.length > 0 && cachedGuestAndCompanions.map((g) => (
                         <button
                             key={g.id}
                             className={`btn-tab ${viewingGuest.id === g.id ? 'active' : ''}`}
@@ -138,6 +147,23 @@ const CustomerModal = ({ selectedGuest, setSelectedGuest, cachedGuestAndCompanio
                     <div className="me-auto text-white small">
                         Checked-in by <strong>{viewingGuest.checkedInBy}</strong> on {viewingGuest.getCheckInDateString()}
                     </div>
+                    {!viewingGuest.status && <div className="d-flex gap-2">
+                        <button
+                            className="btn btn-sm btn-outline-gold"
+                            onClick={() => handleReCheckIn(false)}
+                        >
+                            <i className="bi bi-person-check me-1"></i> Re-CheckIn {viewingGuest.name.split(' ')[0]}
+                        </button>
+
+                        {cachedGuestAndCompanions.length > 1 && (
+                            <button
+                                className="btn btn-sm btn-gold-admin"
+                                onClick={() => handleReCheckIn(true)}
+                            >
+                                <i className="bi bi-people-fill me-1"></i> Re-CheckIn Group
+                            </button>
+                        )}
+                    </div>}
                     <div className="me-auto text-white small">
                         {!viewingGuest.status && (
                             <>
