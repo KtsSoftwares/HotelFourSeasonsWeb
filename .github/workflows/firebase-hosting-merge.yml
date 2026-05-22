@@ -21,6 +21,7 @@ jobs:
             VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
             VITE_FIRESTORE_URL: ${{ secrets.VITE_FIRESTORE_URL }}
             VITE_FIREBASE_STORAGE_URL: ${{ secrets.VITE_FIREBASE_STORAGE_URL }}
+            VITE_RECAPTCHA_V3_SITE_KEY: ${{ secrets.VITE_RECAPTCHA_V3_SITE_KEY }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
