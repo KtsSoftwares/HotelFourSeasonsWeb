@@ -75,7 +75,7 @@ const AdminPortal = () => {
                     </div>
 
                     {/* Profile Dropdown (Shared Desktop/Mobile) */}
-                    <div className="dropdown" ref={dropdownRef}>
+                    <div className="dropdown position-relative" ref={dropdownRef}>
                         <button
                             className="btn btn-black text-light border-secondary dropdown-toggle d-flex align-items-center gap-2 rounded-pill px-3"
                             type="button"

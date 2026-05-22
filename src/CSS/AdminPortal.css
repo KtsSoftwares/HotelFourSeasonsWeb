@@ -103,6 +103,25 @@
     }
 }
 
+/* CRITICAL FIX: For micro screens 380px and below */
+@media (max-width: 380px) {
+    .dropdown-menu-end {
+        /* Force the menu to stay inside the 380px screen boundaries */
+        right: -5px !important; /* Tiny offset to align with the navbar spacing */
+        width: 190px !important; /* Slightly narrower box so it never causes a horizontal scroll */
+        font-size: 0.85rem !important;
+    }
+    
+    .dropdown-menu li.px-3.py-2 {
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    
+    .dropdown-item {
+        padding: 8px 10px !important;
+    }
+}
+
 @media (min-width: 992px) {
     .nav-link:hover {
         color: #D4AF37 !important;
