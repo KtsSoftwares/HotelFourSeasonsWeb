@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect, createContext, useContext, useCallback } from "react";
 import { initializeApp } from "firebase/app";
+import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getAuth, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getFirestore, doc, getDoc, getDocs, setDoc, serverTimestamp, collection, query, onSnapshot, deleteDoc, runTransaction, Timestamp, startAt, endAt, orderBy, where, startAfter, limit, documentId } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage";
@@ -49,6 +50,16 @@ const appFirebase = initializeApp(firebaseConfig);
 const auth = getAuth(appFirebase);
 const db = getFirestore(appFirebase, import.meta.env.VITE_FIRESTORE_URL);
 const storage = getStorage(appFirebase, import.meta.env.VITE_FIREBASE_STORAGE_URL);
+
+// App Check Initialization with ReCAPTCHA v3
+// Site won't run in localhost, we first host it and AppCheck will do its work.
+if (typeof window !== "undefined") {
+    initializeAppCheck(appFirebase, {
+        provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY),
+        // Isomorphic token auto-refreshment
+        isTokenAutoRefreshEnabled: true 
+    });
+}
 
 export const useFirebase = () => useContext(FbContext);
 
