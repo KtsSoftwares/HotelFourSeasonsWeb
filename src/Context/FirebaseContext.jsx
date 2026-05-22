@@ -54,7 +54,6 @@ const storage = getStorage(appFirebase, import.meta.env.VITE_FIREBASE_STORAGE_UR
 // App Check Initialization with ReCAPTCHA v3
 // Site won't run in localhost, we first host it and AppCheck will do its work.
 if (typeof window !== "undefined") {
-    console.log(import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY);
     initializeAppCheck(appFirebase, {
         provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY),
         // Isomorphic token auto-refreshment
