@@ -1,12 +1,12 @@
-/* Increased standard font size for the whole container */
+/* Ensure the standard base wrapping container scales down smoothly */
 .container {
     font-size: 1.1rem; 
+    max-width: 100%;
 }
 
-/* Labels: Now visible, uppercase, and elegant */
 .profile-label {
     display: block;
-    color: #a0a0a0; /* Slightly lighter than secondary for readability */
+    color: #a0a0a0; 
     text-transform: uppercase;
     font-size: 0.75rem;
     letter-spacing: 1.5px;
@@ -15,22 +15,36 @@
 }
 
 .passport-photo-container {
-    width: 140px; /* Slightly larger */
+    width: 140px; 
     height: 175px;
     border: 3px solid #D4AF37;
     border-radius: 4px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    overflow: hidden; /* Lock down the outer boundaries */
 }
 
 .staff-avatar {
-    max-width: 100%; /* Ensures it never gets wider than its container */
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
 .mono-text {
-    font-family: 'Courier New', Courier, monospace; /* Looks more "official" for IDs */
+    font-family: 'Courier New', Courier, monospace; 
     font-size: 0.85rem;
+}
+
+.bg-black-30 {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+/* Typography safeguards */
+.text-truncate-custom {
+    white-space: normal;
+    word-break: break-word;
+}
+.text-wrap-custom {
+    word-break: break-all;
 }
 
 .uppercase-label {
@@ -40,19 +54,13 @@
 }
 
 .text-gold { color: #D4AF37; }
-.btn-gold { 
-    background-color: #D4AF37; 
-    color: black; 
-    font-weight: bold; 
-}
 .border-gold { border: 1px solid #D4AF37 !important; }
 
-/* Values: Larger, bold, and more readable */
 .profile-value {
     color: #ffffff;
     font-size: 1.2rem;
     font-weight: 500;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.3); /* Subtle gold border */
+    border-bottom: 1px solid rgba(212, 175, 55, 0.3); 
     padding-bottom: 8px;
     margin-bottom: 10px;
 }
@@ -71,16 +79,24 @@ h2.text-gold {
     letter-spacing: -0.5px;
 }
 
-.bg-gold {
-    background-color: #D4AF37 !important; /* Gold */
-    color: #000000 !important; /* Dark text for high contrast */
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.4em 0.8em;
+/* Universal Mobile Adaptations (Covers 412px viewports and lower) */
+@media (max-width: 575.98px) {
+    .container {
+        font-size: 1rem;
+    }
+    h2.text-gold {
+        font-size: 1.6rem;
+        line-height: 1.2;
+    }
+    .profile-value {
+        font-size: 1.05rem;
+        padding-bottom: 4px;
+    }
+    .passport-photo-container {
+        width: 120px; /* Slightly scaled for small mobile aspect ratios */
+        height: 150px;
+    }
 }
-
-/* Mobile Adjustment */
 
 @media (max-width: 768px) {
     .profile-value {
