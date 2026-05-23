@@ -46,7 +46,7 @@
 }
 
 /* Shiny Login Button */
-.btn-gold-login {
+.submit-section .btn-gold-login {
   background-color: #D4AF37;
   color: #000;
   border: none;
@@ -56,7 +56,23 @@
   transition: 0.3s;
 }
 
-.btn-gold-login:hover {
+.submit-section .btn-gold-login:hover {
   background-color: #bfa030;
   transform: translateY(-2px);
+}
+
+.submit-section .text-gold-subtle {
+    color: #bfa15f !important; /* A slightly muted, elegant gold so it doesn't distract from the main button */
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    transition: color 0.2s ease-in-out;
+}
+
+.submit-section .small-reset-btn:hover:not([disabled]) {
+    color: #D4AF37 !important; /* Bright gold on hover */
+    text-decoration: underline !important;
+}
+
+.submit-section .small-reset-btn[disabled] {
+    cursor: not-allowed;
 }

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect, createContext, useContext, useCallback } from "react";
 import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
-import { getAuth, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { getAuth, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, sendPasswordResetEmail } from "firebase/auth";
 import { getFirestore, doc, getDoc, getDocs, setDoc, serverTimestamp, collection, query, onSnapshot, deleteDoc, runTransaction, Timestamp, startAt, endAt, orderBy, where, startAfter, limit, documentId } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage";
 import { FirebaseContextValue } from "../Models/Types";
@@ -29,10 +29,26 @@ import { Bill } from "../Models/Bill";
  * @property {KtsLegacy} legacyData
  * @property {GstData} gstData
  * @property {{ month: number, year: number, reports: Bill[] }} reportData
- * @property {function(Object, Customer, number, boolean): Promise<CustomerReturn>} getCustomersWithFilters
+ * @property {function(string): string} getPreDocumentId
+ * @property {function(string, string): Promise<void>} loginWithEmail
+ * @property {function(): Promise<Staff|null>} getStaffData
+ * @property {function(object, boolean): Promise<void>} updateStaffProfile
+ * @property {function(string|null, string, File): Promise<string>} uploadOrReplaceFile
+ * @property {function(boolean): Promise<void>} getRooms
+ * @property {function(object): Promise<boolean>} saveRoom
+ * @property {function(string): Promise<boolean>} deleteStorageFolder
+ * @property {function(string): Promise<boolean>} deleteRoom
+ * @property {function(string, object, boolean): Promise<void>} saveCustomer
  * @property {function(string[]): Promise<Customer[]>} getCompanions
+ * @property {function(Array, string): Promise<void>} checkInTransaction
+ * @property {function(string[], string, {companyName: string, companyAddress: {district: string, state: string, country: string}, companyGst: string}): Promise<void>} checkOutTransaction
  * @property {function(Customer): Promise<{bill: Bill, hotelData: HotelData}>} getOrSetBill
+ * @property {function(Object, Customer, number, boolean): Promise<CustomerReturn>} getCustomersWithFilters
  * @property {function(string): Promise<Customer[]>} searchCustomersForEntry
+ * @property {function(number, number): Promise<void>} fetchReport
+ * @property {function(): Promise<void>} logout
+ * @property {function(): Promise<void>} getLegacyAndHotelDataAndGstData
+ * @property {function(string): Promise<void>} resetPassword
 */
 
 const firebaseConfig = {
@@ -273,7 +289,7 @@ export const FirebaseProvider = ({ children }) => {
      * Function to fetch all rooms
      * We are not using this function in the Dashboard & Customer Page because we have a real-time listener, but it's still useful for any future non-real-time use cases.
      * @param {boolean} forceRefresh - Whether to force a refresh of the room data.
-     * @returns {Promise<Array>} - A promise resolving to the list of rooms.
+     * @returns {Promise<void>} - A promise resolving to the list of rooms.
      */
     const getRooms = useCallback(async (forceRefresh = false) => {
         // If we already have rooms and don't need a refresh, return existing state
@@ -438,8 +454,6 @@ export const FirebaseProvider = ({ children }) => {
                     status: false
                 }, { merge: true });
             }
-
-            return true;
         } catch (error) {
             console.error("Firestore Customer Save Error:", error);
             throw error;
@@ -449,7 +463,7 @@ export const FirebaseProvider = ({ children }) => {
     /**
      * To fetch companion List of Lead customer.
      * @param {string[]} companionIds - Array of string ids of companions.
-     * @returns {Customer[]} - Returns the Array of customer object which is companions.
+     * @returns {Promise<Customer[]>} - Returns the Array of customer object which is companions.
      */
     const getCompanions = async (companionIds) => {
         try {
@@ -777,6 +791,22 @@ export const FirebaseProvider = ({ children }) => {
         }
     }, []);
 
+    /**
+     * Sends a password reset email to the specified email address using Firebase Authentication.
+     * @param {string} email - The email address of the user requesting a password reset.
+     * @returns {Promise<void>} - A promise that resolves when the email has been sent.
+     */
+    const resetPassword = async (email) => {
+        try{
+            await sendPasswordResetEmail(auth, email);
+            setAlert({msg: "If this email is registered, a password reset link has been sent to it.", type: "success"});
+        }
+        catch (e){
+            console.error("Password Reset Error:", e);
+            setAlert({msg: "Failed to send password reset email. Please try again later.", type: "danger"});
+        }
+    }
+
     return (
         <FbContext.Provider value={{
             user,
@@ -794,6 +824,7 @@ export const FirebaseProvider = ({ children }) => {
             setLoading,
             setAlert,
             loginWithEmail,
+            resetPassword,
             logout,
             getStaffData,
             updateStaffProfile,
