@@ -78,7 +78,7 @@ const RoomsDashboard = () => {
     };
 
     return (
-        <div className="container mt-4 pb-5">
+        <div className="container mt-4 pb-5 rooms-dashboard">
             {/* Admin Action Bar */}
             <div className="d-flex justify-content-between align-items-center mb-4 border-bottom-gold pb-3">
                 <div>

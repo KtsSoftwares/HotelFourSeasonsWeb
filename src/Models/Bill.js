@@ -46,7 +46,7 @@ export class Bill {
     }
 
     toFirestore() {
-        return { id: this.id, invoiceNo: this.invoiceNo, billDate: this.billDate, daysStayed: this.daysStayed, amount: this.amount };
+        return { id: this.id, invoiceNo: this.invoiceNo, gstNo: this.gstNo, partyName: this.partyName, billDate: this.billDate, daysStayed: this.daysStayed, amount: this.amount };
     }
 
     static getFinancialYear() {

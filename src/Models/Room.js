@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export class Room {
     constructor(id, data) {
         /** @type {string} */ this.id = id;
@@ -9,5 +11,11 @@ export class Room {
         /** @type {string} */ this.description = data.description;
         /** @type {string} */ this.status = data.status;
         /** @type {string} */ this.currentGuestId = data.currentGuestId;
+        /** @type {Timestamp} */ this.lastUpdate = data.lastUpdate;
+    }
+
+    getLastUpdateDateString() {
+        if (!this.lastUpdate) return "N/A";
+        return new Date(this.lastUpdate.seconds * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
     }
 };

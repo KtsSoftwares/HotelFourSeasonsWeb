@@ -7,17 +7,17 @@
     border: 1px solid #222;
 }
 
-.border-bottom-gold {
+.report-container .border-bottom-gold {
     border-bottom: 2px solid #D4AF37 !important;
 }
 
-.report-title {
+.report-container .report-title {
     color: #D4AF37;
     font-weight: 500;
 }
 
 /* Filter bar uses Row/Col now, so we style the background */
-.filter-bar {
+.report-container .filter-bar {
     background: #1A1A1B;
     padding: 20px;
     border-radius: 8px;
@@ -26,7 +26,7 @@
     /* Bootstrap rows usually have negative margins */
 }
 
-.input-group-custom label {
+.report-container .input-group-custom label {
     font-size: 1rem;
     font-weight: 600;
     color: #D4AF37;
@@ -36,19 +36,19 @@
 }
 
 /* Overriding Bootstrap form-select for our Dark Theme */
-.admin-input {
+.report-container .admin-input {
     background-color: #111 !important;
     color: white !important;
     border: 1px solid #444 !important;
     font-size: 14px;
 }
 
-.admin-input:focus {
+.report-container .admin-input:focus {
     border-color: #D4AF37 !important;
     box-shadow: none;
 }
 
-.btn-generate {
+.report-container .btn-generate {
     background: #D4AF37 !important;
     color: #000 !important;
     font-weight: 700;
@@ -58,12 +58,12 @@
     /* Matches the select height */
 }
 
-.btn-generate:hover {
+.report-container .btn-generate:hover {
     background: #B8860B !important;
 }
 
 /* Table styling stays consistent with the "Golden" row effect */
-.report-table {
+.report-container .report-table {
     width: 100% !important;
     border-collapse: separate;
     border-spacing: 0 0;
@@ -71,7 +71,7 @@
     font-variant-numeric: tabular-nums;
 }
 
-.report-table thead th {
+.report-container .report-table thead th {
     background: #111 !important;
     color: #D4AF37 !important;
     font-size: 13px !important;
@@ -83,7 +83,7 @@
     letter-spacing: 1px;
 }
 
-.report-table tbody td {
+.report-container .report-table tbody td {
     color: #eee;
     font-size: 14px !important;
     background: #1A1A1B !important;
@@ -93,29 +93,29 @@
 }
 
 /* Add rounded corners to the start and end of each row "card" */
-.report-table tbody tr td:first-child {
+.report-container .report-table tbody tr td:first-child {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-.report-table tbody tr td:last-child {
+.report-container .report-table tbody tr td:last-child {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-.report-table tbody tr:hover td {
+.report-container .report-table tbody tr:hover td {
     background: #363129 !important;
     cursor: default;
 }
 
-.bold-text {
+.report-container .bold-text {
     font-weight: 700;
     color: #D4AF37;
     font-family: 'Inter', -apple-system, sans-serif; 
     letter-spacing: 0.5px;
 }
 
-.btn-excel {
+.report-container .btn-excel {
     background: #1d6f42;
     color: #fff;
     padding: 12px 25px;
@@ -123,42 +123,46 @@
     border-radius: 6px;
 }
 
-.btn-excel:hover {
+.report-container .btn-excel:hover {
     background: #155231;
 }
 
 /* Mobile Responsive "Card" View */
 @media (max-width: 768px) {
+    .report-container .input-group-custom label{
+        font-size: 0.9rem;
+    }
+
     /* Make the container full width on mobile */
-    .filter-bar.w-75, .table-responsive.w-75 {
+    .report-container .filter-bar.w-75, .report-container .table-responsive.w-75 {
         width: 100% !important;
     }
 
     /* Force the table to stop behaving like a table */
-    .report-table, 
-    .report-table thead, 
-    .report-table tbody, 
-    .report-table th, 
-    .report-table td, 
-    .report-table tr { 
+    .report-container .report-table, 
+    .report-container .report-table thead, 
+    .report-container .report-table tbody, 
+    .report-container .report-table th, 
+    .report-container .report-table td, 
+    .report-container .report-table tr { 
         display: block; 
     }
 
     /* Hide table headers (but keep for screen readers) */
-    .report-table thead tr { 
+    .report-container .report-table thead tr { 
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    .report-table tbody tr {
+    .report-container .report-table tbody tr {
         margin-bottom: 15px;
         border: 1px solid #333;
         border-radius: 8px;
         background: #1A1A1B;
     }
 
-    .report-table td { 
+    .report-container .report-table td { 
         /* Behave  like a "row" */
         border: none !important;
         border-bottom: 1px solid #222 !important; 
@@ -168,12 +172,12 @@
         white-space: normal;
     }
 
-    .report-table td:last-child {
+    .report-container .report-table td:last-child {
         border-bottom: none !important;
     }
 
     /* Label the data using pseudo-elements */
-    .report-table td:before { 
+    .report-container .report-table td:before { 
         position: absolute;
         top: 20px;
         left: 15px;

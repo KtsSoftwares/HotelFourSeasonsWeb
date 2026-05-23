@@ -1,5 +1,5 @@
 /* Reuse the core layout from RoomModal */
-.custom-modal-overlay {
+.checkout-modal .custom-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -13,12 +13,14 @@
     backdrop-filter: blur(8px);
 }
 
-.modal-header-gold {
-    padding: 15px 20px !important; /* Slightly tighter padding */
-    position: relative; /* Context for absolute positioning if needed */
+.checkout-modal.modal-header-gold {
+    padding: 15px 20px !important;
+    /* Slightly tighter padding */
+    position: relative;
+    /* Context for absolute positioning if needed */
 }
 
-.custom-modal-content {
+.checkout-modal .custom-modal-content {
     background: #111 !important;
     border: 1px solid #D4AF37;
     width: 95%;
@@ -27,53 +29,55 @@
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
-.close-btn {
+.checkout-modal.close-btn {
     background: none;
     border: none;
     color: #D4AF37;
-    font-size: 1.8rem !important; /* Slightly smaller to match RoomModal */
+    font-size: 1.8rem !important;
+    /* Slightly smaller to match RoomModal */
     cursor: pointer;
     line-height: 1;
     transition: transform 0.2s;
     padding: 0 5px;
 }
 
-.close-btn:hover {
+.checkout-modal .close-btn:hover {
     transform: scale(1.2);
     color: #fff;
 }
 
 /* Ensure the title doesn't take up 100% width, pushing the button away */
-.modal-header-gold h3 {
-    max-width: 80%; 
-    font-size: 1.25rem !important; /* Matches luxury scale */
+.checkout-modal .modal-header-gold h3 {
+    max-width: 80%;
+    font-size: 1.25rem !important;
+    /* Matches luxury scale */
 }
 
 /* Bill Summary Styling */
-.bill-preview-card {
+.checkout-modal .bill-preview-card {
     background: #000;
     border: 1px solid #333;
     padding: 20px;
     border-radius: 8px;
 }
 
-.preview-row {
+.checkout-modal .preview-row {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.admin-label-alt {
+.checkout-modal .admin-label-alt {
     color: #cccccc;
     font-size: 1rem;
     text-transform: uppercase;
 }
 
-#gstInput{
+#gstInput {
     text-transform: uppercase;
 }
 
-.preview-value {
+.checkout-modal .preview-value {
     color: #fff;
     font-size: 1.2rem;
 }
@@ -90,22 +94,28 @@
 }
 
 /* Ensure inputs are visible against dark background */
-.admin-input {
+.checkout-modal .admin-input {
     background: #000 !important;
     border: 1px solid #333 !important;
     color: #fff !important;
 }
 
-.admin-input:focus {
+.checkout-modal .admin-input:focus {
     border-color: #D4AF37 !important;
     background: #050505 !important;
 }
 
-.admin-label {
+.checkout-modal .admin-label {
     color: #ffffff;
     font-size: 1rem;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 5px;
     display: block;
+}
+
+@media (max-width: 768px) {
+    .checkout-modal .preview-value, .checkout-modal .admin-label, .checkout-modal .admin-label-alt {
+        font-size: 0.9rem;
+    }
 }

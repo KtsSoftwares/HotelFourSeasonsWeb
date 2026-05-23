@@ -34,7 +34,7 @@ const CheckOutModal = ({ showCheckoutModal, setShowCheckoutModal, guest, corpDet
     };
 
     return (
-        <div className="custom-modal-overlay">
+        <div className="custom-modal-overlay checkout-modal">
             <div className="custom-modal-content animate-slide-up">
                 {/* Gold Header matching RoomModal */}
                 <div className="modal-header-gold">

@@ -83,7 +83,7 @@ const RoomModal = ({ isOpen, onClose, roomToEdit, onSave }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="custom-modal-overlay">
+        <div className="custom-modal-overlay room-modal">
             <div className="custom-modal-content animate-slide-up">
                 <div className="modal-header-gold">
                     <h3 className="font-playfair text-gold mb-0">
@@ -116,7 +116,7 @@ const RoomModal = ({ isOpen, onClose, roomToEdit, onSave }) => {
                             {/* Image Upload Gallery */}
                             <div className="col-12 mt-3">
                                 <label className="admin-label text-gold small fw-bold">Room Gallery (3 Images Required)</label>
-                                <div className="d-flex gap-2 justify-content-between">
+                                <div className="row g-2 row-cols-1 row-cols-sm-2 row-cols-md-4 justify-content-center">
                                     {formData.images.map((url, index) => (
                                         <div key={index} className="image-upload-card">
                                             {/* The Image Preview */}

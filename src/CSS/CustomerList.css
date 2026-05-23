@@ -118,37 +118,74 @@ select.admin-input option {
     }
 
     .custom-admin-table tbody tr {
-        margin-bottom: 20px;
+        margin-bottom: 22px;
         border: 1px solid #333;
         border-radius: 12px;
         overflow: hidden;
+        background: #1A1A1B;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
 
     .custom-admin-table td { 
         position: relative;
-        padding-left: 45% !important; 
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important; 
+        flex-wrap: nowrap !important; /* Prevents button breaking weirdly */
+        padding: 16px 16px !important; 
+        border-bottom: 1px solid #28282a !important;
+        min-height: auto;
+    }
+
+    .custom-admin-table td > div:not(.btn) {
         text-align: right !important;
-        border-bottom: 1px solid #222 !important;
-        min-height: 50px;
+        width: 100%;
+    }
+
+    .custom-admin-table td:first-child,
+    .custom-admin-table td:last-child {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
     }
 
     .custom-admin-table td:last-child {
         border-bottom: none !important;
-        background: #111 !important; /* Darker footer for the Action button */
+        background: #111 !important; 
+        justify-content: space-between !important; /* Keeps ACTION and DETAILS pinned nicely */
+        align-items: center !important; /* Centers button vertically in the footer row */
+        padding: 14px 16px !important;
     }
 
     /* Mobile Labels */
     .custom-admin-table td:before { 
         content: attr(data-label);
-        position: absolute;
-        top: 20px;
-        left: 15px;
-        width: 40%; 
-        text-align: left;
-        font-weight: bold;
+        position: static !important; /* Strips out the problematic absolute overlapping alignment mechanics */
+        font-weight: 700;
         color: #D4AF37;
         text-transform: uppercase;
-        font-size: 10px;
+        font-size: 11px;
         letter-spacing: 1px;
+        padding-right: 10px;
+        padding-top: 2px; 
+        flex-shrink: 0; /* Ensures the label text never gets squished */
+    }
+
+    .custom-admin-table td[data-label="Guest Info"] {
+        flex-direction: row !important; /* Keep label and value wrapper side by side */
+        align-items: flex-start !important;
+    }
+
+    .custom-admin-table td[data-label="Guest Info"] .guest-meta-block {
+        display: flex !important;
+        flex-direction: column !important; /* Stack name above mobile number */
+        align-items: flex-end !important;  /* Align both strings neatly to the right edge */
+        text-align: right !important;
+        width: 100%;
+    }
+
+    /* Clean spacing fix for the packed lines */
+    .custom-admin-table td[data-label="Guest Info"] .guest-meta-block .fw-bold {
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
     }
 }

@@ -52,7 +52,7 @@ const CustomerEntry = () => {
     const availableRooms = rooms.filter(room => room.status === "Not Occupied");
 
     useEffect(() => {
-        // Check if there is re-entry data coming from the modal
+        // Check if there is re-entry data coming from the Customer modal
         if (location.state?.reEntryData) {
             const incomingGuests = location.state.reEntryData;
 
@@ -276,10 +276,10 @@ const CustomerEntry = () => {
                                 </h5>
                                 {index > 0 && (
                                     <div className="d-flex gap-2">
-                                        <button type="button" className="btn btn-sm btn-outline-warning" onClick={() => copyLeadDetails(index)}>
-                                            <i className="bi bi-copy me-1"></i> Sync with Lead
+                                        <button type="button" className="btn btn-sm btn-outline-warning" title='Copy Lead Details' onClick={() => copyLeadDetails(index)}>
+                                            <i className="bi bi-copy me-1"></i>
                                         </button>
-                                        <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => removeGuest(index)}>
+                                        <button type="button" className="btn btn-sm btn-outline-danger" title='Remove Guest' onClick={() => removeGuest(index)}>
                                             <i className="bi bi-trash"></i>
                                         </button>
                                     </div>
@@ -398,11 +398,11 @@ const CustomerEntry = () => {
                     ))}
 
                     <div className="d-flex flex-column gap-3 mt-4 align-items-center">
-                        <button type="button" className="btn btn-outline-gold w-50" onClick={addCompanion}>
+                        <button type="button" className="btn btn-outline-gold w-50 mobile-width" onClick={addCompanion}>
                             <i className="bi bi-person-plus-fill me-2"></i>Add Companion
                         </button>
 
-                        <button type="submit" className="btn btn-gold-admin px-5 py-3 mt-3 w-75 shadow-lg" disabled={isFormInvalid}>
+                        <button type="submit" className="btn btn-gold-admin p-3 mt-3 w-75 shadow-lg mobile-width" disabled={isFormInvalid}>
                             <i className="bi bi-check2-circle me-2"></i> COMPLETE ALL CHECK-INS
                         </button>
                     </div>
@@ -442,9 +442,9 @@ const CustomerEntry = () => {
                                             <h6 className="text-white mb-0">{res.name}</h6>
                                             <p className="text-white-50 small mb-0">
                                                 <i className="bi bi-phone me-1"></i> {res.mobileNumber} |
-                                                <i className="bi bi-geo-alt ms-2 me-1"></i> {res.address.district}
+                                                <i className="bi bi-geo-alt ms-2 me-1 text-wrap"></i> {res.address.district}
                                             </p>
-                                            <span className="badge bg-dark-gold mt-1">Last Visit: {res.getCheckInDateString()}</span>
+                                            <span className="badge bg-dark-gold mt-1 text-wrap">Last Visit: {res.getCheckInDateString()}</span>
                                         </div>
                                     </div>
                                 ))

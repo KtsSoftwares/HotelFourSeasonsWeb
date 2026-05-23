@@ -41,17 +41,22 @@ const AdminPortal = () => {
     return (
         <div className="admin-layout">
             {/* Header Navbar */}
-            <nav className="navbar navbar-dark bg-dark sticky-top border-bottom-gold shadow px-3">
-                <div className="container-fluid">
-                    <div className="d-flex align-items-center">
+            <nav className="navbar navbar-dark bg-dark sticky-top border-bottom-gold shadow px-2 px-sm-3">
+                {/* Added flex-nowrap to keep everything on one line */}
+                <div className="container-fluid flex-nowrap justify-content-between align-items-center">
+
+                    {/* BRANDING SECTION */}
+                    <div className="d-flex align-items-center min-w-0">
                         {/* Hamburger for Mobile */}
                         <button
-                            className="btn btn-link text-gold d-lg-none p-0 me-3"
+                            className="btn btn-link text-gold d-lg-none p-0 me-2 me-sm-3 flex-shrink-0"
                             onClick={() => setIsSidebarOpen(true)}
                         >
                             <i className="bi bi-list fs-2"></i>
                         </button>
-                        <div className="navbar-brand fw-bold text-gold font-playfair m-0">
+
+                        {/* Added dynamic typography sizing classes */}
+                        <div className="navbar-brand fw-bold text-gold font-playfair m-0 text-truncate-header">
                             FOUR SEASONS ADMIN
                         </div>
                     </div>
@@ -75,14 +80,14 @@ const AdminPortal = () => {
                     </div>
 
                     {/* Profile Dropdown (Shared Desktop/Mobile) */}
-                    <div className="dropdown position-relative" ref={dropdownRef}>
+                    {/* Added flex-shrink-0 so the profile circle button never gets squished */}
+                    <div className="dropdown position-relative flex-shrink-0" ref={dropdownRef}>
                         <button
-                            className="btn btn-black text-light border-secondary dropdown-toggle d-flex align-items-center gap-2 rounded-pill px-3"
+                            className="btn btn-black text-light border-secondary dropdown-toggle d-flex align-items-center gap-2 rounded-pill px-2 px-sm-3"
                             type="button"
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                         >
                             <div className="status-green-dot"></div>
-                            {/* Changed d-none d-sm-inline to d-none d-md-inline to drop text faster on small screens */}
                             <span className="small d-none d-md-inline">
                                 {user?.displayName || user?.email || "Admin"}
                             </span>
@@ -90,14 +95,10 @@ const AdminPortal = () => {
 
                         <ul
                             className={`dropdown-menu dropdown-menu-end dropdown-menu-dark border-gold shadow ${isDropdownOpen ? 'show' : ''}`}
-                            style={{
-                                position: 'absolute',
-                                margin: '8px 0 0 0'
-                            }}
+                            style={{ margin: 0 }}
                         >
                             <li className="px-3 py-2 border-bottom border-secondary">
                                 <p className="mb-0 small text-secondary">Signed in as</p>
-                                {/* Added standard Bootstrap typography tracking */}
                                 <p className="mb-0 fw-bold text-gold small text-truncate w-100">{user?.email}</p>
                             </li>
                             <li>

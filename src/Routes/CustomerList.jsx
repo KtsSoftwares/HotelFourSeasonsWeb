@@ -226,8 +226,10 @@ const CustomerList = () => {
                                 {customers.length > 0 ? customers.map(guest => (
                                     <tr key={guest.id}>
                                         <td data-label="Guest Info">
-                                            <div className="fw-bold text-white">{guest.name}</div>
-                                            <div className="text-white-50 small">{guest.mobileNumber}</div>
+                                            <div className="guest-meta-block">
+                                                <div className="fw-bold text-white">{guest.name}</div>
+                                                <div className="text-white-50 small">{guest.mobileNumber}</div>
+                                            </div>
                                         </td>
                                         <td data-label="Room"><span className="text-gold fw-bold">#{guest.roomNumber}</span></td>
                                         <td data-label="Check-in Date">{guest.getCheckInDateString()}</td>

@@ -100,7 +100,7 @@ h2.text-gold {
 
 @media (max-width: 768px) {
     .profile-value {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
     h2.text-gold {
         font-size: 1.8rem;

@@ -36,15 +36,15 @@
     margin-bottom: 10px;
 }
 
-.admin-label {
+.admin-container .admin-label {
     color: #d7d7d7;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 700;
     margin-bottom: 8px;
     text-transform: uppercase;
 }
 
-.admin-input {
+.admin-container .admin-input {
     background: #0A0A0A !important;
     border: 1px solid #444 !important;
     color: #FFF !important;
@@ -52,7 +52,7 @@
     font-size: 0.95rem;
 }
 
-.admin-input:focus {
+.admin-container .admin-input:focus {
     border-color: #D4AF37 !important;
     box-shadow: 0 0 8px rgba(212, 175, 55, 0.2) !important;
 }
@@ -78,7 +78,7 @@
     border-radius: 8px;
 }
 
-.btn-gold-admin {
+.admin-container .btn-gold-admin {
     background-color: #D4AF37;
     color: #000;
     border: none;
@@ -88,7 +88,7 @@
     transition: 0.3s;
 }
 
-.btn-gold-admin:hover {
+.admin-container .btn-gold-admin:hover {
     background-color: #B8962E;
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
@@ -137,4 +137,23 @@
 @media (max-width: 768px) {
     .admin-container { padding: 15px; }
     .card-header-gold { text-align: center; }
+
+    .admin-container .admin-label, .admin-container .admin-input{
+        font-size: 0.75rem;
+    }
+
+    .admin-container .font-playfair{
+        font-size: 1.1rem;
+    }
+
+    .admin-container .btn-gold-admin{
+        letter-spacing: 1px;
+    }
+}
+
+@media (max-width: 380px) {
+    .mobile-width {
+        width: 100% !important;
+        padding: 5px 5px !important;
+    }
 }

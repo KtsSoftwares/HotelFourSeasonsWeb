@@ -26,7 +26,7 @@ const CustomerModal = ({ selectedGuest, setSelectedGuest, cachedGuestAndCompanio
         <div className="custom-modal-overlay" onClick={() => setSelectedGuest(null)}>
             {/* Wider modal for breathing room (w-100 max-width: 900px) */}
             <div className="custom-modal-content customer-detail-modal animate-slide-up" onClick={e => e.stopPropagation()}>
-                <div className="companion-tabs d-flex bg-black p-2 gap-2 border-bottom border-gold-subtle">
+                <div className="companion-tabs d-flex align-items-center bg-black p-2 gap-2 border-bottom border-gold-subtle">
                     {cachedGuestAndCompanions.length > 0 && cachedGuestAndCompanions.map((g) => (
                         <button
                             key={g.id}
@@ -139,39 +139,53 @@ const CustomerModal = ({ selectedGuest, setSelectedGuest, cachedGuestAndCompanio
 
                         </div>
                     </div>
+                    <div className="modal-footer-admin p-3 border-top border-secondary bg-black d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
+
+                        {/* CHECKED-IN METADATA GROUP */}
+                        <div className="footer-meta-block text-center text-md-start">
+                            <span className="text-white-50 small">Checked-in by: </span>
+                            <strong className="text-white small">{viewingGuest.checkedInBy}</strong>
+                            <span className="d-block text-gold sub-date-text">on {viewingGuest.getCheckInDateString()}</span>
+                        </div>
+
+                        {/* BUTTONS ACTION GROUP */}
+                        {!viewingGuest.status && (
+                            <div className="d-flex gap-2 my-2 my-md-0 flex-wrap justify-content-center flex-shrink-0">
+                                <button
+                                    className="btn btn-sm btn-outline-gold px-3 py-2"
+                                    onClick={() => handleReCheckIn(false)}
+                                >
+                                    <i className="bi bi-person-check me-1"></i> Re-CheckIn {viewingGuest.name.split(' ')[0]}
+                                </button>
+
+                                {cachedGuestAndCompanions.length > 1 && (
+                                    <button
+                                        className="btn btn-sm btn-gold-admin px-3 py-2"
+                                        onClick={() => handleReCheckIn(true)}
+                                    >
+                                        <i className="bi bi-people-fill me-1"></i> Re-CheckIn Group
+                                    </button>
+                                )}
+                            </div>
+                        )}
+
+                        {/* CHECKED-OUT METADATA GROUP */}
+                        <div className="footer-meta-block text-center text-md-end">
+                            {!viewingGuest.status ? (
+                                <>
+                                    <span className="text-white-50 small">Checked-out by: </span>
+                                    <strong className="text-white small">{viewingGuest.checkedOutBy}</strong>
+                                    <span className="d-block text-gold sub-date-text">on {viewingGuest.getCheckOutDateString()}</span>
+                                </>
+                            ) : (
+                                <span className="badge bg-success-soft text-success px-3 py-2 text-uppercase font-monospace tracking-wide">Still Checked In</span>
+                            )}
+                        </div>
+                    </div>
                 </div>
 
                 {zoomedImg && <ZoomedImg zoomedImg={zoomedImg} setZoomedImg={setZoomedImg} />}
 
-                <div className="modal-footer-admin p-3 border-top border-secondary bg-black">
-                    <div className="me-auto text-white small">
-                        Checked-in by <strong>{viewingGuest.checkedInBy}</strong> on {viewingGuest.getCheckInDateString()}
-                    </div>
-                    {!viewingGuest.status && <div className="d-flex gap-2">
-                        <button
-                            className="btn btn-sm btn-outline-gold"
-                            onClick={() => handleReCheckIn(false)}
-                        >
-                            <i className="bi bi-person-check me-1"></i> Re-CheckIn {viewingGuest.name.split(' ')[0]}
-                        </button>
-
-                        {cachedGuestAndCompanions.length > 1 && (
-                            <button
-                                className="btn btn-sm btn-gold-admin"
-                                onClick={() => handleReCheckIn(true)}
-                            >
-                                <i className="bi bi-people-fill me-1"></i> Re-CheckIn Group
-                            </button>
-                        )}
-                    </div>}
-                    <div className="me-auto text-white small">
-                        {!viewingGuest.status && (
-                            <>
-                                Checked-out by <strong>{viewingGuest.checkedOutBy}</strong> on {viewingGuest.getCheckOutDateString()}
-                            </>
-                        )}
-                    </div>
-                </div>
             </div>
         </div>
     );

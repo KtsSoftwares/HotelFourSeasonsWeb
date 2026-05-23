@@ -1,21 +1,31 @@
 /* --- Global Styles --- */
-.border-bottom-gold { border-bottom: 2px solid #D4AF37 !important; }
-.text-gold { color: #D4AF37 !important; }
+.border-bottom-gold {
+    border-bottom: 2px solid #D4AF37 !important;
+}
+
+.text-gold {
+    color: #D4AF37 !important;
+}
+
 .status-green-dot {
-    width: 8px; height: 8px; background-color: #28a745;
-    border-radius: 50%; box-shadow: 0 0 5px #28a745;
+    width: 8px;
+    height: 8px;
+    background-color: #28a745;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #28a745;
 }
 
 /* --- Mobile Sidebar Logic --- */
 .mobile-sidebar {
     position: fixed;
     top: 0;
-    left: -280px; /* Hidden by default */
+    left: -280px;
+    /* Hidden by default */
     width: 280px;
     height: 100vh;
     z-index: 1060;
     transition: left 0.3s ease-in-out;
-    box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
     border-right: 1px solid #D4AF37;
 }
 
@@ -29,7 +39,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
     z-index: 1050;
 }
@@ -62,9 +72,27 @@
     transform: translateY(0);
 }
 
+.dropdown-menu-end {
+    /* Restores clean desktop calculation boundaries */
+    position: absolute !important;
+    right: 0 !important;
+    left: auto !important;
+    transform: none !important;
+    margin-top: 8px !important;
+    width: 220px !important;
+}
+
 /* Desktop Hover/Active Link */
 .nav-link.active {
     color: #D4AF37 !important;
+}
+
+.text-truncate-header {
+    font-size: 1.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.5px;
 }
 
 @media (max-width: 576px) {
@@ -72,13 +100,13 @@
         /* Kill absolute coordinate bugs */
         right: 0 !important;
         left: auto !important;
-        
+
         /* Universal width sizing limits */
         width: 220px !important;
         max-width: 55vw !important;
-        
+
         /* Prevent dropdown boundary collision from screen margin edge */
-        margin-right: -5px !important; 
+        margin-right: -5px !important;
         padding: 0.5rem 0;
     }
 
@@ -96,7 +124,7 @@
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
     }
-    
+
     .dropdown-item {
         padding: 10px 12px !important;
         font-size: 0.9rem;
@@ -105,18 +133,41 @@
 
 /* CRITICAL FIX: For micro screens 380px and below */
 @media (max-width: 380px) {
-    .dropdown-menu-end {
-        /* Force the menu to stay inside the 380px screen boundaries */
-        right: -5px !important; /* Tiny offset to align with the navbar spacing */
-        width: 190px !important; /* Slightly narrower box so it never causes a horizontal scroll */
-        font-size: 0.85rem !important;
+    .dropdown-menu.dropdown-menu-end.show {
+        /* Force it to use fixed viewport positioning instead of tracking the button */
+        position: fixed !important;
+        top: 60px !important;
+        /* Forces it right below your sticky navbar */
+        right: 10px !important;
+        /* Fixed distance from the right edge of the screen */
+        left: auto !important;
+
+        /* Layout constraints */
+        width: 200px !important;
+        max-width: calc(100vw - 20px) !important;
+        margin: 0 !important;
+        transform: none !important;
+        /* Prevents Popper.js from translating coordinates */
+        z-index: 1070 !important;
     }
-    
+
+    .text-truncate-header {
+        font-size: 1.05rem;
+        /* Scales the text down smoothly so it fits beside the buttons */
+        max-width: 200px;
+        /* Prevents pushing into your profile container */
+    }
+
+    .navbar-dark {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+
     .dropdown-menu li.px-3.py-2 {
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
-    
+
     .dropdown-item {
         padding: 8px 10px !important;
     }
@@ -136,7 +187,9 @@
         height: 38px;
         justify-content: center;
     }
-    
+
     /* Remove the default arrow if it's too messy on tiny screens (Optional) */
-    .btn-black.dropdown-toggle::after { display: none !important; }
+    .btn-black.dropdown-toggle::after {
+        display: none !important;
+    }
 }
