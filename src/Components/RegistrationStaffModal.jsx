@@ -112,7 +112,7 @@ const RegistrationStaffModal = ({ onClose }) => {
                                             required />
                                     </div>
                                     <div className="col-md-4">
-                                        <label className="premium-label">Last Digit</label>
+                                        <label className="premium-label">Last Digit of Aadhaar Number</label>
                                         <input type="text" placeholder="0-9"
                                             className="form-control premium-input text-center"
                                             onChange={(e) => setAadhaarData({ ...aadhaarData, lastDigit: e.target.value })}
