@@ -22,7 +22,7 @@ const MonthlyReport = () => {
 
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-    const isFutureSelection = selectedYear === currentYear && selectedMonth > currentMonth;
+    const isFutureSelection = selectedYear === currentYear && selectedMonth >= currentMonth;
 
     const handleGenerateClick = () => {
         if (reportData.month === selectedMonth && reportData.year === selectedYear) {
@@ -63,7 +63,7 @@ const MonthlyReport = () => {
                         <select className="form-select admin-input" value={selectedMonth} onChange={(e) => setSelectedMonth(parseInt(e.target.value))}>
                             {months.map((m, i) => {
                                 // Disable months that are in the future for the current year
-                                const isFutureMonth = selectedYear === currentYear && i > currentMonth;
+                                const isFutureMonth = selectedYear === currentYear && i >= currentMonth;
 
                                 return (
                                     <option key={m} value={i} disabled={isFutureMonth}>
