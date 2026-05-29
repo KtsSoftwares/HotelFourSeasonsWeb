@@ -47,9 +47,7 @@ const styles = StyleSheet.create({
     },
     hotelSub: {
         fontSize: 9,
-        color: '#555555',
-        marginTop: 0,
-        marginBottom: 0
+        color: '#555555'
     },
     invoiceMeta: {
         alignItems: 'flex-end'
