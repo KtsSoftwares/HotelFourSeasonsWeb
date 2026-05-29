@@ -32,6 +32,12 @@ select.admin-input option {
     color-scheme: white; 
 }
 
+.admin-label {
+    color: #d7d7d7;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
 .custom-admin-table {
     width: 100% !important;
     border-collapse: separate;
@@ -187,5 +193,13 @@ select.admin-input option {
     .custom-admin-table td[data-label="Guest Info"] .guest-meta-block .fw-bold {
         line-height: 1.3 !important;
         margin-bottom: 4px !important;
+    }
+
+    .admin-input::placeholder{
+        font-size: 0.75rem;
+    }
+
+    .admin-input, .admin-label{
+        font-size: 0.85rem;
     }
 }

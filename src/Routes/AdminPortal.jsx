@@ -76,6 +76,9 @@ const AdminPortal = () => {
                             <li className="nav-item">
                                 <NavLink className="nav-link" to="/admin/monthlyReport">Monthly Report</NavLink>
                             </li>
+                            <li className="nav-item">
+                                <NavLink className="nav-link" to="/admin/corporateConference">Corporate Conference</NavLink>
+                            </li>
                         </ul>
                     </div>
 
@@ -146,6 +149,11 @@ const AdminPortal = () => {
                         <li className="nav-item">
                             <NavLink className="nav-link mobile-link" to="/admin/monthlyReport" onClick={closeMobileMenu}>
                                 <i className="bi bi-people me-2"></i> Monthly Report
+                            </NavLink>
+                        </li>
+                        <li className="nav-item">
+                            <NavLink className="nav-link mobile-link" to="/admin/corporateConference" onClick={closeMobileMenu}>
+                                <i className="bi bi-people me-2"></i> Corporate Conference
                             </NavLink>
                         </li>
                     </ul>

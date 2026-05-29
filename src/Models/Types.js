@@ -18,6 +18,6 @@ export class FirebaseContextValue {
         this.legacyData = null;
 
         /** @type {import('./GstData').GstData | null} */
-        this.gstData = new GstData({cgst: 0, sgst: 0});
+        this.gstData = new GstData({cgst: 0, sgst: 0, igst: 0, cateringGst: 0, rentalGst: 0});
     }
 };

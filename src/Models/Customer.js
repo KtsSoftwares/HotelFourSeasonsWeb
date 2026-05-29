@@ -25,6 +25,7 @@ import { Timestamp } from "firebase/firestore";
  * @property {string} id
  * @property {string} name
  * @property {string} age
+ * @property {string} mobileNumber
  */
 
 export class Customer {

@@ -188,7 +188,7 @@ const CustomerEntry = () => {
 
         try {
             const leadId = guests[0].id;
-            const allComps = guests.slice(1).map(g => ({ id: g.id, name: g.name, age: g.age }));
+            const allComps = guests.slice(1).map(g => ({ id: g.id, name: g.name, age: g.age, mobileNumber: g.mobileNumber }));
 
             const finalGuestObjects = await Promise.all(guests.map(async (guest, index) => {
                 const storagePath = `Customer Images/${guest.id}`;

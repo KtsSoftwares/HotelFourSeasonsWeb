@@ -3,12 +3,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useFirebase } from "../Context/FirebaseContext";
 import '../CSS/AdminLogin.css';
 import Alert from '../Components/Alert';
+import SmallLoader from '../Components/SmallLoader';
 
 const AdminLogin = () => {
     const { loginWithEmail, resetPassword } = useFirebase();
     const navigate = useNavigate();
 
     const [email, setEmail] = useState("");
+    const [smallLoading, setSmallLoading] = useState(false);
 
     // DYNAMIC UI VALIDATION: Calculates true/false on every change
     const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -16,6 +18,7 @@ const AdminLogin = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSmallLoading(true);
         const formData = new FormData(e.target);
         try {
             if (!isEmailValid || isEmailEmpty) return;
@@ -23,14 +26,19 @@ const AdminLogin = () => {
             setEmail("");
             navigate('/admin');
         } catch (err) {
-            console.error("Login failed");
+            console.error("Login failed:", err);
+        }
+        finally{
+            setSmallLoading(false);
         }
     };
 
     const handleResetPassword = async () => {
         if (isEmailEmpty || !isEmailValid) return;
+        setSmallLoading(true);
         await resetPassword(email);
         setEmail("");
+        setSmallLoading(false);
     }
 
     return (
@@ -74,7 +82,7 @@ const AdminLogin = () => {
                                     />
                                 </div>
 
-                                <div className="d-grid mt-5 submit-section">
+                                {smallLoading ? <SmallLoader /> : <div className="d-grid mt-5 submit-section">
                                     <button type="submit" className="btn btn-gold-login py-3" disabled={!isEmailValid || isEmailEmpty}>
                                         ACCESS DASHBOARD
                                     </button>
@@ -89,7 +97,7 @@ const AdminLogin = () => {
                                             <i className="bi bi-shield-lock me-2"></i>Forgot Password? Send Reset Link
                                         </button>
                                     </div>
-                                </div>
+                                </div>}
 
                                 <div className="text-center mt-3">
                                     <Link to="/" className="return-link">← Return to Lobby</Link>

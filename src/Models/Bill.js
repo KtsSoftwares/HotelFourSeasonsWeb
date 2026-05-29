@@ -45,10 +45,10 @@ export class Bill {
         return new Date(this.billDate.seconds * 1000).toLocaleDateString('en-IN', { day: '2-digit', month: 'long', year: 'numeric' });
     }
 
-    toFirestore() {
-        return { id: this.id, invoiceNo: this.invoiceNo, gstNo: this.gstNo, partyName: this.partyName, billDate: this.billDate, daysStayed: this.daysStayed, amount: this.amount };
-    }
-
+    /**
+     * Gets the current financial year.
+     * @returns {string} - The financial year string.
+     */
     static getFinancialYear() {
         const today = new Date();
         const currentYear = today.getFullYear();
@@ -63,8 +63,10 @@ export class Bill {
     };
 
     /**
+     * Generates a unique invoice number based on the current financial year and a sequence number.
      * @param {string} currentFY - Current Financial year string.
      * @param {number} sequenceNumber - The next number from DB (e.g., 1, 2, 3)
+     * @return {string} - Formatted invoice number (e.g., "HFS / 23-24 / 0001")
      */
     static generateInvoiceNo(currentFY, sequenceNumber) {
         const prefix = "HFS";
@@ -130,12 +132,11 @@ export class Bill {
     };
 
     /** 
-     * @private
      * Convert number to words of Indian currency.
      * @param {number} num - To convert the number into words.
      * @returns {string} - The amount in words in Indian Currency format.
     */
-    static #numberToWordsIndian(num) {
+    static numberToWordsIndian(num) {
         const a = ['', 'one ', 'two ', 'three ', 'four ', 'five ', 'six ', 'seven ', 'eight ', 'nine ', 'ten ', 'eleven ', 'twelve ', 'thirteen ', 'fourteen ', 'fifteen ', 'sixteen ', 'seventeen ', 'eighteen ', 'nineteen '];
         const b = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
 
@@ -158,21 +159,22 @@ export class Bill {
     };
 
     /**
-     * @param {Customer} guest
-     * @param {number} rate
-     * @param {GstData} gst
-     * @param {string} hotelState
-     * @returns {Bill}
+     * Prepares a Bill instance from the given customer, rate, GST data, and hotel state.
+     * @param {Customer} guest - The customer data for whom the bill is being prepared.
+     * @param {number} rate - The rate per day for the stay.
+     * @param {GstData} gst - The GST data containing CGST, SGST, and IGST percentages.
+     * @param {string} hotelState - The state where the hotel is located, used to determine if CGST/SGST or IGST applies.
+     * @returns {Object} - A new Bill object with all calculations done based on the provided data (Compatible for JSON serialization).
      */
     static prepareBill(guest, rate, gst, hotelState) {
         const days = Bill.#calculateDaysStayedIST(guest.checkIn.seconds, guest.checkOut.seconds);
-        
+
         let cgst = 0;
         let sgst = 0;
         let igst = 0;
 
         const subTotal = rate * days;
-        if (guest.companyAddress.state.toLowerCase() === hotelState.toLowerCase()){
+        if (guest.companyAddress.state.toLowerCase() === hotelState.toLowerCase()) {
             cgst = (subTotal * gst.cgst) / 100;
             sgst = (subTotal * gst.sgst) / 100;
         } else igst = (subTotal * gst.igst) / 100;
@@ -180,7 +182,8 @@ export class Bill {
         const finalGST = cgst + sgst + igst;
         const finalTotal = Math.round(subTotal + finalGST);
 
-        return new Bill(guest.id, {
+        return {
+            id: guest.id,
             daysStayed: days,
             gstNo: guest.companyGst,
             partyName: guest.companyName,
@@ -194,8 +197,8 @@ export class Bill {
                 igstAmount: igst,
                 subTotalAmount: subTotal,
                 totalAmount: finalTotal,
-                amountInWords: Bill.#numberToWordsIndian(finalTotal)
+                amountInWords: Bill.numberToWordsIndian(finalTotal)
             }
-        });
+        };
     }
 };

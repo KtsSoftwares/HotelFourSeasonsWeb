@@ -2,7 +2,7 @@ import { useRef, useState, useEffect, createContext, useContext, useCallback } f
 import { initializeApp } from "firebase/app";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 import { getAuth, updateProfile, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, sendPasswordResetEmail } from "firebase/auth";
-import { getFirestore, doc, getDoc, getDocs, setDoc, serverTimestamp, collection, query, onSnapshot, deleteDoc, runTransaction, Timestamp, startAt, endAt, orderBy, where, startAfter, limit, documentId } from "firebase/firestore";
+import { getFirestore, doc, getDoc, getDocs, setDoc, serverTimestamp, collection, query, onSnapshot, deleteDoc, runTransaction, Timestamp, startAt, endAt, orderBy, where, startAfter, limit, documentId, Transaction } from "firebase/firestore";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage";
 import { FirebaseContextValue } from "../Models/Types";
 import { Staff } from "../Models/Staff";
@@ -12,6 +12,7 @@ import { HotelData } from "../Models/HotelData";
 import { KtsLegacy } from "../Models/KtsLegacy";
 import { GstData } from "../Models/GstData";
 import { Bill } from "../Models/Bill";
+import { CateringBill } from "../Models/CateringBill";
 
 /**
  * @typedef {Object} CustomerReturn
@@ -46,6 +47,9 @@ import { Bill } from "../Models/Bill";
  * @property {function(Object, Customer, number, boolean): Promise<CustomerReturn>} getCustomersWithFilters
  * @property {function(string): Promise<Customer[]>} searchCustomersForEntry
  * @property {function(number, number): Promise<void>} fetchReport
+ * @property {function(object): Promise<CateringBill>} saveCateringBill
+ * @property {function(number, DocumentSnapshot | null): Promise<{bills: CateringBill[], lastDoc: DocumentSnapshot | null, moreAvailable: boolean}>} getRecentCateringBills
+ * @property {function(number, string, DocumentSnapshot | null): Promise<{bills: CateringBill[], lastDoc: DocumentSnapshot | null, moreAvailable: boolean}>} searchCateringBillsByGst
  * @property {function(): Promise<void>} logout
  * @property {function(): Promise<void>} getLegacyAndHotelDataAndGstData
  * @property {function(string): Promise<void>} resetPassword
@@ -73,7 +77,7 @@ if (typeof window !== "undefined") {
     initializeAppCheck(appFirebase, {
         provider: new ReCaptchaV3Provider(import.meta.env.VITE_RECAPTCHA_V3_SITE_KEY),
         // Isomorphic token auto-refreshment
-        isTokenAutoRefreshEnabled: true 
+        isTokenAutoRefreshEnabled: true
     });
 }
 
@@ -103,7 +107,7 @@ export const FirebaseProvider = ({ children }) => {
 
     // Gst
     /** @type {[GstData, React.Dispatch<React.SetStateAction<GstData>>]} */
-    const [gstData, setGstData] = useState(new GstData({ cgst: 0, sgst: 0, igst: 0 }));
+    const [gstData, setGstData] = useState(new GstData({ cgst: 0, sgst: 0, igst: 0, cateringGst: 0, rentalGst: 0 }));
 
     /** @type {[{ month: number, year: number, reports: Bill[] }, React.Dispatch<React.SetStateAction<{ month: number, year: number, reports: Bill[] }>>]} */
     const [reportData, setReportData] = useState({});
@@ -169,7 +173,6 @@ export const FirebaseProvider = ({ children }) => {
      */
     const loginWithEmail = async (email, password) => {
         setAlert(null);
-        setLoading(true);
         try {
             await setPersistence(auth, browserSessionPersistence);
             await signInWithEmailAndPassword(auth, email, password);
@@ -179,8 +182,6 @@ export const FirebaseProvider = ({ children }) => {
             else if (error.code === 'auth/user-not-found') friendlyMessage = "No account found with this email.";
             setAlert({ msg: friendlyMessage, type: "danger" });
             throw error;
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -562,6 +563,31 @@ export const FirebaseProvider = ({ children }) => {
     };
 
     /**
+     * Gets or Sets the invoice counter for generating unique invoice numbers in a transactional manner to prevent race conditions.
+     * Not passing this function as a standalone utility in other components because it relies on the transaction object from the calling function to ensure atomicity.
+     * @param {string} currentFY - The current financial year.
+     * @param {Transaction} transaction - The Firestore transaction object passed from the calling function to ensure atomicity.
+     * @return {Promise<number>} The new invoice count to be used for the current bill generation.
+     */
+    const getAndSetBillCount = async (currentFY, transaction) => {
+        const counterRef = doc(db, "invoiceCounter", "counter");
+        const counterSnap = await transaction.get(counterRef);
+        let newCount = 1;
+
+        if (counterSnap.exists()) {
+            const data = counterSnap.data();
+            // If we are still in the same financial year, increment
+            if (data.lastResetYear === currentFY) newCount = data.lastCount + 1;
+            // If the FY has changed (it's now April), reset to 1
+            else newCount = 1;
+        }
+
+        // Update the counter for the next person
+        transaction.set(counterRef, { lastCount: newCount, lastResetYear: currentFY }, { merge: true });
+        return newCount;
+    }
+
+    /**
      * Fetches or Creates a bill document for a checked-out guest.
      * Stores only financial math to keep the document lightweight.
      * @param {Customer} guest - The guest requesting for Bill.
@@ -576,28 +602,14 @@ export const FirebaseProvider = ({ children }) => {
 
             // Scenario A: Bill already exists
             if (billSnap.exists()) {
-                return { bill: new Bill(guest.id, billSnap.data()), hotelData: hotelData };
+                return { bill: new Bill(guest.id, billSnap.data()), hotelData };
             }
 
             // Scenario B: First time "Get Bill" is clicked
-            const counterRef = doc(db, "invoiceCounter", "counter");
             const roomPrice = rooms.find(r => r.roomNumber === guest.roomNumber).price;
             const finalBill = await runTransaction(db, async (transaction) => {
-                const counterSnap = await transaction.get(counterRef);
                 const currentFY = Bill.getFinancialYear();
-                let newCount = 1;
-
-                if (counterSnap.exists()) {
-                    const data = counterSnap.data();
-                    // If we are still in the same financial year, increment
-                    if (data.lastResetYear === currentFY) newCount = data.lastCount + 1;
-                    // If the FY has changed (it's now April), reset to 1
-                    else newCount = 1;
-                }
-
-
-                // Update the counter for the next person
-                transaction.set(counterRef, { lastCount: newCount, lastResetYear: currentFY }, { merge: true });
+                const newCount = await getAndSetBillCount(currentFY, transaction);
 
                 const invoiceNo = Bill.generateInvoiceNo(currentFY, newCount);
                 const billObj = Bill.prepareBill(guest, roomPrice, gstData, hotelData.address.state);
@@ -605,11 +617,11 @@ export const FirebaseProvider = ({ children }) => {
                 billObj.billDate = Timestamp.fromDate(new Date());
 
                 // Save the bill
-                transaction.set(billRef, billObj.toFirestore());
+                transaction.set(billRef, billObj);
                 return billObj;
             });
 
-            return { bill: finalBill, hotelData: hotelData };
+            return { bill: new Bill(finalBill.id, finalBill), hotelData };
         } catch (error) {
             console.error("Error managing bill document:", error);
             setAlert({ msg: `Error managing bill document: ${error}`, type: "danger" });
@@ -750,7 +762,100 @@ export const FirebaseProvider = ({ children }) => {
         }
     };
 
-    // Logout function that also clears user and staff state
+    /**
+     * Transactional Write Wrapper (Handles atomicity protection for Invoice Counters)
+     * @param {Object} billPayload - The payload for the new catering bill.
+     * @returns {Promise<CateringBill>} - A Promise resolving to the created CateringBill object.
+     */
+    const saveCateringBill = async (billPayload) => {
+        const billsCollectionRef = collection(db, "cateringBill");
+
+        return await runTransaction(db, async (transaction) => {
+            const currentFY = Bill.getFinancialYear();
+            const currentNumber = await getAndSetBillCount(currentFY, transaction);
+
+            const nextNewDocRef = doc(billsCollectionRef);
+            const finalizedData = {
+                ...billPayload,
+                billCalculations: { ...billPayload.billCalculations, amountInWords: Bill.numberToWordsIndian(billPayload.billCalculations.finalTotal) },
+                invoiceNo: Bill.generateInvoiceNo(currentFY, currentNumber),
+                invoiceDate: Timestamp.fromDate(new Date())
+            };
+
+            transaction.set(nextNewDocRef, finalizedData);
+            return new CateringBill(nextNewDocRef.id, finalizedData);
+        });
+    };
+
+    /**
+     * Paginates through catering bills ordered by invoice number in descending order.
+     * @param {number} batchSize - The number of documents to fetch in each batch.
+     * @param {DocumentSnapshot} startAfterDoc - The document to start after.
+     * @returns {Promise<{bills: CateringBill[], lastDoc: DocumentSnapshot | null, moreAvailable: boolean}>} - A promise resolving to the fetched bills and metadata.
+     */
+    const getRecentCateringBills = async (batchSize = 3, startAfterDoc = null) => {
+        const baseCol = collection(db, "cateringBill");
+        let q = query(baseCol, orderBy("invoiceDate", "desc"), limit(batchSize + 1));
+
+        if (startAfterDoc) {
+            q = query(baseCol, orderBy("invoiceDate", "desc"), startAfter(startAfterDoc), limit(batchSize + 1));
+        }
+
+        const snap = await getDocs(q);
+        const bills = snap.docs.map(d => new CateringBill(d.id, d.data()));
+
+        return {
+            bills: bills.slice(0, batchSize),
+            lastDoc: snap.docs[snap.docs.length - 2] || null,
+            moreAvailable: snap.docs.length === batchSize + 1
+        };
+    };
+
+    /**
+     * Searches for catering bills by GST number with prefix matching and pagination.
+     * @param {number} batchSize - The number of documents to fetch in each batch.
+     * @param {string} gstNumber - The GST number prefix to search for.
+     * @param {DocumentSnapshot} startAfterDoc - The document to start after for pagination.
+     * @returns {Promise<{bills: CateringBill[], lastDoc: DocumentSnapshot | null, moreAvailable: boolean}>}
+     */
+    const searchCateringBillsByGst = async (batchSize = 3, gstNumber, startAfterDoc = null) => {
+        // Standardize to uppercase since GSTINs are always capitalized strings
+        const searchStr = gstNumber.trim().toUpperCase();
+        const collectionRef = collection(db, "cateringBill");
+
+        let q = query(
+            collectionRef,
+            orderBy("clientData.companyGst", "asc"),
+            startAt(searchStr),
+            endAt(searchStr + "\uf8ff"),
+            limit(batchSize + 1)
+        );
+
+        if (startAfterDoc) {
+            q = query(
+                collectionRef,
+                orderBy("clientData.companyGst", "asc"),
+                startAt(searchStr),
+                endAt(searchStr + "\uf8ff"),
+                startAfter(startAfterDoc), // Seamlessly picks up where the last card left off
+                limit(batchSize + 1)
+            );
+        }
+
+        const snap = await getDocs(q);
+        const bills = snap.docs.map(d => new CateringBill(d.id, d.data()));
+
+        return {
+            bills: bills.slice(0, batchSize),
+            lastDoc: snap.docs[snap.docs.length - 2] || null,
+            moreAvailable: snap.docs.length === batchSize + 1
+        };
+    };
+
+    /**
+     * Logout function that also clears user and staff state.
+     * @returns {Promise<void>}
+     */
     const logout = async () => {
         try {
             setLoading(true);
@@ -764,7 +869,10 @@ export const FirebaseProvider = ({ children }) => {
         }
     };
 
-    // Combined function to fetch both legacy and hotel data, used in Customer Page
+    /**
+     * Combined function to fetch legacy, hotel, and GST data, used in required Pages.
+     * @returns {Promise<void>}
+     */
     const getLegacyAndHotelDataAndGstData = useCallback(async () => {
         // Only fetch if we don't have the data yet to save on Firebase reads
         if (legacyData && hotelData && gstData) return;
@@ -797,13 +905,13 @@ export const FirebaseProvider = ({ children }) => {
      * @returns {Promise<void>} - A promise that resolves when the email has been sent.
      */
     const resetPassword = async (email) => {
-        try{
+        try {
             await sendPasswordResetEmail(auth, email);
-            setAlert({msg: "If this email is registered, a password reset link has been sent to it.", type: "success"});
+            setAlert({ msg: "If this email is registered, a password reset link has been sent to it.", type: "success" });
         }
-        catch (e){
+        catch (e) {
             console.error("Password Reset Error:", e);
-            setAlert({msg: "Failed to send password reset email. Please try again later.", type: "danger"});
+            setAlert({ msg: "Failed to send password reset email. Please try again later.", type: "danger" });
         }
     }
 
@@ -844,7 +952,10 @@ export const FirebaseProvider = ({ children }) => {
             setAppliedFilters,
             getOrSetBill,
             fetchReport,
-            searchCustomersForEntry
+            searchCustomersForEntry,
+            saveCateringBill,
+            getRecentCateringBills,
+            searchCateringBillsByGst
         }}>
             {children}
         </FbContext.Provider>

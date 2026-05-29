@@ -11,6 +11,7 @@ import CustomerList from './Routes/CustomerList.jsx';
 import ProtectedRoute from './ProtectedRoute.jsx';
 import Profile from './Routes/ProfilePage.jsx';
 import MonthlyReport from './Routes/MonthlyReport.jsx';
+import CorporateBilling from './Routes/CorporateBilling.jsx';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         {/* The Customer Entry Page */}
         <Route path="customerEntry" element={<CustomerEntry />} />
 
+
         {/* The Rooms Dashboard Page */}
         <Route path="roomsDashboard" element={<RoomsDashboard />} />
 
@@ -42,6 +44,9 @@ function App() {
 
         {/* The Monthly Report Page */}
         <Route path="monthlyReport" element={<MonthlyReport />} />
+
+        {/* The Corporate Conference Page */}
+        <Route path="corporateConference" element={<CorporateBilling />} />
 
         {/* The Profile Page */}
         <Route path="profile" element={<Profile />} />
