@@ -92,14 +92,14 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
                     <View style={styles.tableColWide}><Text style={[styles.tableCell, styles.bold]}>Guest Name</Text></View>
                     <View style={styles.tableCol}><Text style={[styles.tableCell, styles.bold]}>Mobile No.</Text></View>
                     <View style={[styles.tableCol, { width: '5%' }]}><Text style={[styles.tableCell, styles.bold]}>Age</Text></View>
-                    <View style={[styles.tableCol, { width: '25%' }]}><Text style={[styles.tableCell, styles.bold]}>ID Reference</Text></View>
+                    <View style={[styles.tableCol, { width: '30%' }]}><Text style={[styles.tableCell, styles.bold]}>ID Reference</Text></View>
                 </View>
                 <View style={styles.tableRow}>
                     <View style={[styles.tableCol, { width: '5%' }]}><Text style={styles.tableCell}>1</Text></View>
                     <View style={styles.tableColWide}><Text style={styles.tableCell}>{customer.name} (Lead)</Text></View>
                     <View style={styles.tableCol}><Text style={styles.tableCell}>{customer.mobileNumber}</Text></View>
                     <View style={[styles.tableCol, { width: '5%' }]}><Text style={styles.tableCell}>{customer.age}</Text></View>
-                    <View style={[styles.tableCol, { width: '25%' }]}><Text style={styles.tableCell}>{customer.id}</Text></View>
+                    <View style={[styles.tableCol, { width: '30%' }]}><Text style={styles.tableCell}>{customer.id}</Text></View>
                 </View>
                 {customer.companions.map((comp, index) => (
                     <View style={styles.tableRow} key={comp.id}>
@@ -107,7 +107,7 @@ const InvoicePDF = ({ hotel, customer, bill }) => (
                         <View style={styles.tableColWide}><Text style={styles.tableCell}>{comp.name}</Text></View>
                         <View style={styles.tableCol}><Text style={styles.tableCell}>{comp.mobileNumber}</Text></View>
                         <View style={[styles.tableCol, { width: '5%' }]}><Text style={styles.tableCell}>{comp.age}</Text></View>
-                        <View style={[styles.tableCol, { width: '25%' }]}><Text style={styles.tableCell}>{comp.id}</Text></View>
+                        <View style={[styles.tableCol, { width: '30%' }]}><Text style={styles.tableCell}>{comp.id}</Text></View>
                     </View>
                 ))}
             </View>
