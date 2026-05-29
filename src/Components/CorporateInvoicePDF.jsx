@@ -223,7 +223,10 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                     <View>
                         <Text style={styles.hotelTitle}>{hotelData?.name || "Hotel Four Seasons"}</Text>
                         <Text style={styles.hotelSub}>{`${hotelData?.address.line1}, ${hotelData.address.city}, ${hotelData.address.state} ${hotelData.address.pin}` || "Dostinagar, Pancharatna Road, Goalpara, Assam 783101"}</Text>
-                        <Text style={styles.hotelSub}>GSTIN: {hotelData?.gstNo || "18AXCPS2518L1Z5"}</Text>
+                        <Text style={styles.hotelSub}>Contact: {hotelData?.contactNumbers?.join(", ") || "+91 94013 91428"}</Text>
+                        <Text style={[styles.hotelSub, { fontWeight: 700 }]}>GSTIN: {hotelData?.gstNo || "18AXCPS2518L1Z5"}</Text>
+                        <Text style={styles.hotelSub}>Email: {hotelData?.email || "info.ktsgroupglp@gmail.com"}</Text>
+                        <Text style={styles.hotelSub}>Website: {hotelData?.website || ""}</Text>
                     </View>
                     <View style={styles.invoiceMeta}>
                         <Text style={styles.invoiceBadge}>PROFORMA INVOICE</Text>
