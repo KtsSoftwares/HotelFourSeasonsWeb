@@ -47,8 +47,7 @@ const styles = StyleSheet.create({
     },
     hotelSub: {
         fontSize: 9,
-        color: '#555555',
-        marginTop: 2
+        color: '#555555'
     },
     invoiceMeta: {
         alignItems: 'flex-end'
@@ -222,7 +221,7 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                 <View style={styles.headerRow}>
                     <View>
                         <Text style={styles.hotelTitle}>{hotelData?.name || "Hotel Four Seasons"}</Text>
-                        <Text style={styles.hotelSub}>{`${hotelData?.address.line1}, ${hotelData.address.city}, ${hotelData.address.state} ${hotelData.address.pin}` || "Dostinagar, Pancharatna Road, Goalpara, Assam 783101"}</Text>
+                        <Text style={[styles.hotelSub, { marginTop: 2 }]}>{`${hotelData?.address.line1}, ${hotelData.address.city}, ${hotelData.address.state} ${hotelData.address.pin}` || "Dostinagar, Pancharatna Road, Goalpara, Assam 783101"}</Text>
                         <Text style={styles.hotelSub}>Contact: {hotelData?.contactNumbers?.join(", ") || "+91 94013 91428"}</Text>
                         <Text style={[styles.hotelSub, { fontWeight: 700 }]}>GSTIN: {hotelData?.gstNo || "18AXCPS2518L1Z5"}</Text>
                         <Text style={styles.hotelSub}>Email: {hotelData?.email || "info.ktsgroupglp@gmail.com"}</Text>
