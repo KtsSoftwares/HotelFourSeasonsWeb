@@ -355,13 +355,13 @@ const CorporateBilling = () => {
                             <div className="d-flex flex-column flex-sm-row gap-3 mt-4 justify-content-end">
                                 <button
                                     type="button"
-                                    className="btn btn-outline-gold px-4 py-3 fw-bold"
+                                    className="btn btn-outline-gold fw-bold fs-6 shadow"
                                     onClick={handleGenerateQuotation}
                                 >
                                     <i className="bi bi-file-earmark-text me-2"></i> GENERATE QUOTATION
                                 </button>
                                 <button
-                                    className="btn btn-gold-admin fw-bold px-5 py-3 fs-6 shadow"
+                                    className="btn btn-gold-admin fw-bold fs-6 shadow"
                                     onClick={handleSubmitAndInvoice} disabled={isSubmitting}
                                 >
                                     {isSubmitting ? <>Generating Invoice... <SmallLoader /></> : <><i className="bi bi-file-earmark-pdf-fill me-2"></i> COMPOSITE BILL</>}
