@@ -354,7 +354,7 @@ const CorporateInvoicePDF = ({ hotelData, bill, isQuotation }) => {
 
                 {/* CORPORATE LEGAL COMPLIANCE FOOTER SIGN OFF */}
                 <View style={styles.footerDeclaration}>
-                    <Text style={styles.legalNotice}>
+                    <Text style={isQuotation ? [styles.legalNotice, { width: '100%' }] : styles.legalNotice}>
                         {isQuotation
                             ? "This document is a commercial price estimate and proposal framework. Official tax scheduling follows confirmation."
                             : "We declare that this invoice shows the actual price of the event services described and that all particulars are true and correct."}
