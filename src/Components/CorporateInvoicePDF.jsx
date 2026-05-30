@@ -318,12 +318,12 @@ const CorporateInvoicePDF = ({ hotelData, bill, isQuotation }) => {
                         </View>
 
                         <View style={styles.calcRow}>
-                            <Text style={styles.td}>Catering GST Value</Text>
+                            <Text style={styles.td}>Catering GST Value ({billCalculations.foodGstPercent}%)</Text>
                             <Text style={styles.td}>₹{billCalculations.cateringGst.toFixed(2)}</Text>
                         </View>
 
                         <View style={styles.calcRow}>
-                            <Text style={styles.td}>Hall & Sound System GST Value</Text>
+                            <Text style={styles.td}>Hall & Sound System GST Value ({billCalculations.rentalGstPercent}%)</Text>
                             <Text style={styles.td}>₹{billCalculations.rentalGst.toFixed(2)}</Text>
                         </View>
 

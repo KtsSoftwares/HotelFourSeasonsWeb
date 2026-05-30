@@ -53,7 +53,7 @@ const CorporateBilling = () => {
         const finalTotal = Math.round(rawTotal);
         const roundOff = (finalTotal - rawTotal).toFixed(2);
 
-        return { hallSubtotal, soundSubtotal, cateringSubtotal, taxableValue, cateringGst, rentalGst, totalGst, roundOff, finalTotal };
+        return { hallSubtotal, soundSubtotal, cateringSubtotal, foodGstPercent, rentalGstPercent, taxableValue, cateringGst, rentalGst, totalGst, roundOff, finalTotal };
     }, [hallDays, soundDays, totalGuests, rates]);
 
     // Data Loading Functions

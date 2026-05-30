@@ -22,6 +22,8 @@
  * @property {number} soundSubtotal
  * @property {number} cateringSubtotal
  * @property {number} taxableValue
+ * @property {number} foodGstPercent
+ * @property {number} rentalGstPercent
  * @property {number} cateringGst
  * @property {number} rentalGst
  * @property {number} totalGst
@@ -66,6 +68,8 @@ export class CateringBill {
             soundSubtotal: billCalculations.soundSubtotal || 0,
             cateringSubtotal: billCalculations.cateringSubtotal || 0,
             taxableValue: billCalculations.taxableValue || 0,
+            foodGstPercent: billCalculations.foodGstPercent || 0,
+            rentalGstPercent: billCalculations.rentalGstPercent || 0,
             cateringGst: billCalculations.cateringGst || 0,
             rentalGst: billCalculations.rentalGst || 0,
             totalGst: billCalculations.totalGst || 0,
