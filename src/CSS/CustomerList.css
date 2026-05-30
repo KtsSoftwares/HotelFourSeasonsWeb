@@ -199,7 +199,7 @@ select.admin-input option {
         font-size: 0.75rem;
     }
 
-    .admin-input, .admin-label{
-        font-size: 0.85rem;
+    .admin-input, .admin-label, .fs-6{
+        font-size: 0.85rem !important;
     }
 }
