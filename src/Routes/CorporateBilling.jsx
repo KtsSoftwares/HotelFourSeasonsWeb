@@ -181,6 +181,9 @@ const CorporateBilling = () => {
             }
         });
 
+        // Clear out the inputs on the dashboard layout
+        setClientData({ companyName: "", companyGst: "", companyAddress: "" });
+
         triggerPdfDownload(quotationData, true);
     };
 
