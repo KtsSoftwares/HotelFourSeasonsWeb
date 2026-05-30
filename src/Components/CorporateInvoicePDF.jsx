@@ -241,7 +241,7 @@ const CorporateInvoicePDF = ({ hotelData, bill, isQuotation }) => {
                 {/* BUYER INFORMATION BLOCK */}
                 <View style={styles.billingSection}>
                     <View style={styles.billColumn}>
-                        <Text style={styles.sectionLabel}>Buyer (Bill To)</Text>
+                        <Text style={styles.sectionLabel}>{isQuotation ? "To," : "Buyer (Bill To)"}</Text>
                         <Text style={styles.companyName}>{clientData.companyName}</Text>
                         <Text style={styles.metaText}>{clientData.companyAddress}</Text>
                         <Text style={styles.metaText}>GSTIN/UIN: {clientData.companyGst || "N/A"}</Text>
