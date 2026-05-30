@@ -106,6 +106,10 @@ select.admin-input option {
     color: #000;
 }
 
+.fs-6 {
+    letter-spacing: 0 !important;
+}
+
 @media (max-width: 768px) {
     .custom-admin-table, 
     .custom-admin-table thead, 
