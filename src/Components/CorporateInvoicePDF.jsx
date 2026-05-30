@@ -206,13 +206,17 @@ const styles = StyleSheet.create({
 
 /**
  * CorporateInvoicePDF Component
- * @param {{ hotelData: HotelData, bill: CateringBill }} props
+ * @param {{ hotelData: HotelData, bill: CateringBill, isQuotation: boolean }} props
  */
-const CorporateInvoicePDF = ({ hotelData, bill }) => {
+const CorporateInvoicePDF = ({ hotelData, bill, isQuotation }) => {
     const { clientData, rates, inputs, billCalculations } = bill;
 
+    const docTitle = isQuotation
+        ? `Quotation-${clientData.companyName || 'Corporate'}`
+        : `Catering Invoice-${bill.invoiceNo}`;
+
     return (
-        <Document title={`Catering Invoice-${bill.invoiceNo}`}>
+        <Document title={docTitle}>
             <Page size="A4" style={styles.page}>
                 {/* Decorative Accent Header Band */}
                 <View style={styles.topAccent} />
@@ -228,8 +232,8 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                         <Text style={styles.hotelSub}>Website: {hotelData?.website || ""}</Text>
                     </View>
                     <View style={styles.invoiceMeta}>
-                        <Text style={styles.invoiceBadge}>PROFORMA INVOICE</Text>
-                        <Text style={styles.metaText}>Invoice No: {bill.invoiceNo}</Text>
+                        <Text style={styles.invoiceBadge}>{isQuotation ? "QUOTATION" : "PROFORMA INVOICE"}</Text>
+                        <Text style={styles.metaText}>{isQuotation ? "Proposal Ref:" : "Invoice No:"} {bill.invoiceNo}</Text>
                         <Text style={styles.metaText}>Dated: {bill.getInvoiceDateString()}</Text>
                     </View>
                 </View>
@@ -240,7 +244,7 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                         <Text style={styles.sectionLabel}>Buyer (Bill To)</Text>
                         <Text style={styles.companyName}>{clientData.companyName}</Text>
                         <Text style={styles.metaText}>{clientData.companyAddress}</Text>
-                        <Text style={styles.metaText}>GSTIN/UIN: {clientData.companyGst}</Text>
+                        <Text style={styles.metaText}>GSTIN/UIN: {clientData.companyGst || "N/A"}</Text>
                     </View>
                     <View style={styles.billColumn}>
                         <Text style={styles.sectionLabel}>Venue Details</Text>
@@ -300,7 +304,10 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                     <View style={styles.termsBlock}>
                         <Text style={{ fontWeight: 700, marginBottom: 3, color: '#1A1A1B' }}>Terms & Conditions:</Text>
                         <Text>1. All disputes are strictly subject to local Goalpara Jurisdiction.</Text>
-                        <Text>2. This is a secure Computer Generated Proforma Invoice requiring no physical seals.</Text>
+                        {isQuotation ?
+                            (<Text style={{ color: '#D4AF37', fontWeight: 700 }}>2. This quotation estimate is strictly valid for 15 days from the date of issue.</Text>)
+                            : (<Text>2. This is a secure Computer Generated Proforma Invoice requiring no physical seals.</Text>)
+                        }
                     </View>
 
                     {/* Right Column: Statement Totals */}
@@ -331,7 +338,7 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                         </View>
 
                         <View style={styles.totalRow}>
-                            <Text style={styles.totalLabel}>Grand Total Due:</Text>
+                            <Text style={styles.totalLabel}>{isQuotation ? "Estimated Total:" : "Grand Total Due:"}</Text>
                             <Text style={styles.totalValue}>₹{billCalculations.finalTotal.toLocaleString('en-IN')}.00</Text>
                         </View>
                     </View>
@@ -341,7 +348,6 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                 <View style={styles.wordsBlock}>
                     <Text style={styles.wordsText}>
                         <Text style={{ fontWeight: 700 }}>Amount Chargeable (In Words): </Text>
-                        {/* Approach B Payoffs: Pulls the pre-computed string instantly from database model */}
                         {billCalculations.amountInWords.toUpperCase() || "N/A"}
                     </Text>
                 </View>
@@ -349,13 +355,15 @@ const CorporateInvoicePDF = ({ hotelData, bill }) => {
                 {/* CORPORATE LEGAL COMPLIANCE FOOTER SIGN OFF */}
                 <View style={styles.footerDeclaration}>
                     <Text style={styles.legalNotice}>
-                        We declare that this invoice shows the actual price of the event services described and that all particulars are true and correct.
+                        {isQuotation
+                            ? "This document is a commercial price estimate and proposal framework. Official tax scheduling follows confirmation."
+                            : "We declare that this invoice shows the actual price of the event services described and that all particulars are true and correct."}
                     </Text>
-                    <View style={styles.signatureBlock}>
+                    {!isQuotation ? (<View style={styles.signatureBlock}>
                         <Text style={{ fontSize: 8, color: '#333' }}>For {hotelData?.name || "Hotel Four Seasons"}</Text>
                         <View style={styles.signatureLine} />
                         <Text style={styles.signatureLabel}>Authorized Signatory</Text>
-                    </View>
+                    </View>) : null}
                 </View>
             </Page>
         </Document>

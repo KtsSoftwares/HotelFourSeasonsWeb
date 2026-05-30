@@ -6,6 +6,7 @@ import { useFirebase } from "../Context/FirebaseContext";
 import SmallLoader from '../Components/SmallLoader';
 import CateringBillCard from '../Components/CateringBillCard';
 import { CateringBill } from '../Models/CateringBill';
+import { Bill } from '../Models/Bill';
 
 const CorporateBilling = () => {
     const { gstData, hotelData, setAlert, saveCateringBill, getRecentCateringBills, searchCateringBillsByGst } = useFirebase();
@@ -161,11 +162,33 @@ const CorporateBilling = () => {
         }
     };
 
+    const handleGenerateQuotation = async () => {
+        if (!clientData.companyName || !clientData.companyAddress) {
+            setAlert({ msg: "Please enter at least a Company Name and Address to generate a quotation.", type: "danger" });
+            return;
+        }
+
+        // Building a temporary data model instance without hitting Firestore counters
+        const quotationData = new CateringBill("QUOTATION-TEMP", {
+            invoiceNo: "QUOTATION",
+            invoiceDate: new Date(),
+            clientData,
+            rates,
+            inputs: { hallDays, soundDays, totalGuests },
+            billCalculations: {
+                ...billCalculations,
+                amountInWords: Bill.numberToWordsIndian(billCalculations.finalTotal)
+            }
+        });
+
+        triggerPdfDownload(quotationData, true);
+    };
+
     /**
      * @param {CateringBill} billModelInstance
      */
-    const triggerPdfDownload = async (billModelInstance) => {
-        const doc = <CorporateInvoicePDF hotelData={hotelData} bill={billModelInstance} />;
+    const triggerPdfDownload = async (billModelInstance, isQuotation = false) => {
+        const doc = <CorporateInvoicePDF hotelData={hotelData} bill={billModelInstance} isQuotation={isQuotation} />;
         const blob = await pdf(doc).toBlob();
         const url = URL.createObjectURL(blob);
         window.open(url, '_blank');
@@ -329,12 +352,21 @@ const CorporateBilling = () => {
                                 </div>
                             </div>
 
-                            <button
-                                className="btn btn-gold-admin w-100 fw-bold py-3 mt-4 fs-6 shadow"
-                                onClick={handleSubmitAndInvoice} disabled={isSubmitting}
-                            >
-                                {isSubmitting ? <>Generating Invoice... <SmallLoader /></> : <><i className="bi bi-file-earmark-pdf-fill me-2"></i> COMPOSITE BILL</>}
-                            </button>
+                            <div className="d-flex flex-column flex-sm-row gap-3 mt-4 justify-content-end">
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-gold px-4 py-3 fw-bold"
+                                    onClick={handleGenerateQuotation}
+                                >
+                                    <i className="bi bi-file-earmark-text me-2"></i> GENERATE QUOTATION
+                                </button>
+                                <button
+                                    className="btn btn-gold-admin fw-bold px-5 py-3 fs-6 shadow"
+                                    onClick={handleSubmitAndInvoice} disabled={isSubmitting}
+                                >
+                                    {isSubmitting ? <>Generating Invoice... <SmallLoader /></> : <><i className="bi bi-file-earmark-pdf-fill me-2"></i> COMPOSITE BILL</>}
+                                </button>
+                            </div>
                         </div>
                     </div>
 
