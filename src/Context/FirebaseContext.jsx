@@ -334,7 +334,8 @@ export const FirebaseProvider = ({ children }) => {
             const finalData = {
                 ...roomData,
                 price: parseInt(roomData.price),
-                currentGuestId: roomData.currentGuestId || null // Ensure this field is always present
+                currentGuestId: roomData.currentGuestId || null, // Ensure this field is always present
+                lastUpdate: serverTimestamp()
             };
 
             // setDoc with merge: true makes this work for both NEW and EDIT
