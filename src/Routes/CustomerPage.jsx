@@ -107,7 +107,7 @@ const CustomerPage = () => {
                 {/* 1. Minimalist Branding */}
                 <div className="brand-header text-center py-4 d-flex justify-content-center align-items-center">
                     <img src={KtsLogo} alt="Hotel Four Seasons" className="landing-logo" />
-                    <h2 className="hotel-logo">HOTEL FOUR SEASONS</h2>
+                    <h2 className="hotel-logo">{hotelData ? hotelData.name.toUpperCase() : "HOTEL FOUR SEASONS"}</h2>
                 </div>
 
                 {/* 2. Professional 50% Height Carousel */}

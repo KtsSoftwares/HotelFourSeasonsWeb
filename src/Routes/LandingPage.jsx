@@ -20,7 +20,7 @@ const LandingPage = () => {
             <div className="col-md-8 col-lg-6 main-card p-5">
 
               <h1 className="display-4 fw-light hotel-title mb-2">
-                HOTEL FOUR SEASONS
+                {hotelData ? hotelData.name.toUpperCase() : "HOTEL FOUR SEASONS"}
               </h1>
               <p className="text-uppercase tracking-widest mb-5 tagline">
                 Hospitality • Luxury • Comfort
